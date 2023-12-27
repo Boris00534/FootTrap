@@ -32,6 +32,7 @@ namespace FootTrap.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Shoe> Shoes { get; set; }
 
+        public DbSet<Size> Sizes { get; set; }
         public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -46,6 +47,7 @@ namespace FootTrap.Data
             builder.ApplyConfiguration(new RolesConfiguration());
             builder.ApplyConfiguration(new UserRolesConfiguration());
             builder.ApplyConfiguration(new CustomerConfiguration());
+            builder.ApplyConfiguration(new SizeConfiguration());
 
 
 

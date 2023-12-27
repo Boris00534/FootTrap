@@ -11,5 +11,7 @@ namespace FootTrap.Services.Contracts
         Task<bool> ExistsByEmailAsync(string email);
         Task<bool> ExistsByPhoneAsync(string phone);
 
+        Task<bool> IsCustomerAsync(string userId);
+
     }
 }

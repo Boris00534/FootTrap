@@ -1,0 +1,22 @@
+﻿@using FootTrap.Web.Extensions
+@model FootTrap.Services.ViewModels.Shoes.ShoeViewModel
+
+<div class="col-md-4">
+    <div class="card dish-card">
+        <img src="@Model.ShoePictureUrl" alt="@Model.Name">
+        <div class="card-body">
+            <h5 class="card-title text-black">@Model.Name</h5>
+            <p class="card-ingredients text-black">Size: @Model.Size</p>
+            <p class="card-price text-black"> @Model.Price lv.</p>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="btn btn-warning edit-btn">Edit</a>
+                <a class="btn btn-danger edit-btn">Delete</a>
+            }
+            else if (User.IsInRole("Customer") && (User.Identity.IsAuthenticated))
+            {
+                <a class="btn btn-warning edit-btn">Order</a>
+            }
+        </div>
+    </div>
+</div>

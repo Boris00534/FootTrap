@@ -24,13 +24,14 @@ namespace FootTrap.Web.Controllers
             this.customerService = customerService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Register()
         {
             RegisterViewModel model = new RegisterViewModel();
             return View(model);
         }
+
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (await userService.ExistsByEmailAsync(model.Email))
@@ -88,6 +89,8 @@ namespace FootTrap.Web.Controllers
 
             return View(model);
         }
+
+
         [HttpGet]
         public IActionResult Login()
         {
@@ -132,10 +135,6 @@ namespace FootTrap.Web.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-
-
-
 
     }
 }
