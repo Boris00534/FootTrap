@@ -1,0 +1,22 @@
+﻿@model FootTrap.Services.ViewModels.Shoes.ShoeFromModel
+
+@{
+    ViewData["Title"] = "Add Dish";
+}
+
+
+
+<div class="row">
+    <h2 class="text-center text-light">@ViewData["Title"]</h2>
+
+    <partial name="_ShoeFromPartial" model="@Model" />
+
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/addShoe.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

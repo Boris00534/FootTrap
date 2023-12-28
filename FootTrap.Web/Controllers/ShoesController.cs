@@ -11,12 +11,14 @@ namespace FootTrap.Web.Controllers
         private readonly IShoeService shoeService;
         private readonly IUserService userService;
         private readonly ICategoryService categoryService;
+        private readonly ISizeService sizeService;
 
-        public ShoesController(IShoeService shoeService, IUserService userService, ICategoryService categoryService)
+        public ShoesController(IShoeService shoeService, IUserService userService, ICategoryService categoryService, ISizeService sizeService)
         {
             this.shoeService = shoeService;
             this.userService = userService;
             this.categoryService = categoryService;
+            this.sizeService = sizeService;
         }
 
         [HttpGet]
@@ -35,7 +37,7 @@ namespace FootTrap.Web.Controllers
                 AllShoesFilteredAndPaged serviceModel = await shoeService.GetAllShoesFilteredAndPagedAsync(model);
                 model.TotalShoes = serviceModel.TotalShoes;
                 model.Shoes = serviceModel.Shoes;
-                model.Categories = await categoryService.GetAllCategoriesAsync();
+                model.Categories = await categoryService.GetAllCategoryNamesAsync();
 
                 return View(model);
             }
@@ -45,6 +47,16 @@ namespace FootTrap.Web.Controllers
             }
 
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Add()
+        {
+            ShoeFromModel model = new ShoeFromModel();
+            model.Categories = await categoryService.GetAllCategoriesAsync();
+            model.Sizes = await sizeService.GetAllSizesAsync();
+
+            return View(model);
         }
     }
 }

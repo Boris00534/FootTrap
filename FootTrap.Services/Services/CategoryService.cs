@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FootTrap.Data;
 using FootTrap.Services.Contracts;
+using FootTrap.Services.ViewModels.Category;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootTrap.Services.Services
@@ -17,10 +18,23 @@ namespace FootTrap.Services.Services
         {
             this.context = context;
         }
-        public async Task<List<string>> GetAllCategoriesAsync()
+        public async Task<List<string>> GetAllCategoryNamesAsync()
         {
             var categories = await context.Category
                 .Select(c => c.Name)
+                .ToListAsync();
+
+            return categories;
+        }
+
+        public async Task<List<CategoryViewModel>> GetAllCategoriesAsync()
+        {
+            var categories = await context.Category
+                .Select(c => new CategoryViewModel()
+                {
+                    Id = c.Id, 
+                    Name = c.Name,
+                })
                 .ToListAsync();
 
             return categories;
