@@ -43,5 +43,27 @@ namespace FootTrap.Services.Services
 
             return user.ProfilePictureUrl;
         }
+
+        public async Task<string> UploadImageToShoe(IFormFile imageFile, string folderName, Shoe shoe)
+        {
+            using var stream = imageFile.OpenReadStream();
+
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription(shoe.Id, stream),
+                Folder = folderName
+            };
+
+            var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+            if (uploadResult.Error != null)
+            {
+                throw new InvalidOperationException(uploadResult.Error.Message);
+            }
+
+            shoe.ShoeUrlImage = uploadResult.Url.ToString();
+
+            return shoe.ShoeUrlImage;
+        }
     }
 }

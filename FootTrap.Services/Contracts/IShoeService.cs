@@ -10,5 +10,7 @@ namespace FootTrap.Services.Contracts
     public interface IShoeService
     {
         Task<AllShoesFilteredAndPaged> GetAllShoesFilteredAndPagedAsync(ShoesQueryModel model);
+
+        Task AddAsync(ShoeFromModel model);
     }
 }

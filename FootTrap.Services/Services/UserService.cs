@@ -17,7 +17,8 @@ namespace FootTrap.Services.Services
         {
             this.context = context;
         }
-        public  async Task<bool> ExistsByEmailAsync(string email)
+
+        public async Task<bool> ExistsByEmailAsync(string email)
         {
             var user = await context.Users.AnyAsync(u => u.Email == email);
 
@@ -37,5 +38,6 @@ namespace FootTrap.Services.Services
 
             return isCustomer;
         }
+
     }
 }

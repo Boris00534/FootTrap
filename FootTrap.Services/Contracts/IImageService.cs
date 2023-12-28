@@ -11,5 +11,6 @@ namespace FootTrap.Services.Contracts
     public interface IImageService
     {
         Task<string> UploadImageToUser(IFormFile image, string folderName, User user);
+        Task<string> UploadImageToShoe(IFormFile image, string folderName, Shoe shoe);
     }
 }

@@ -27,7 +27,7 @@ namespace FootTrap.Web.Controllers
             var userId = User.GetId();
             bool isCustomer = await userService.IsCustomerAsync(userId);
 
-            if (!isCustomer)
+            if (!isCustomer && !User.IsInRole("Admin"))
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -52,11 +52,40 @@ namespace FootTrap.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
+
+            if (!User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             ShoeFromModel model = new ShoeFromModel();
             model.Categories = await categoryService.GetAllCategoriesAsync();
             model.Sizes = await sizeService.GetAllSizesAsync();
 
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(ShoeFromModel model)
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                model.Categories = await categoryService.GetAllCategoriesAsync();
+                model.Sizes = await sizeService.GetAllSizesAsync();
+
+                return View(model);
+            }
+
+            await shoeService.AddAsync(model);
+
+            return RedirectToAction("All");
+
+
         }
     }
 }

@@ -14,10 +14,12 @@ namespace FootTrap.Services.Services
     public class ShoeService : IShoeService
     {
         private readonly FootTrapDbContext context;
+        private readonly IImageService imageService;
 
-        public ShoeService(FootTrapDbContext context)
+        public ShoeService(FootTrapDbContext context, IImageService imageService)
         {
             this.context = context;
+            this.imageService = imageService;
         }
         public async Task<AllShoesFilteredAndPaged> GetAllShoesFilteredAndPagedAsync(ShoesQueryModel model)
         {
@@ -63,6 +65,27 @@ namespace FootTrap.Services.Services
                 Shoes = shoeModel,
                 TotalShoes = shoeModel.Count()
             };
+        }
+
+        public async Task AddAsync(ShoeFromModel model)
+        {
+            var shoe = new Shoe()
+            {
+                CategoryId = model.CategoryId,
+                Name = model.Name,
+                Description = model.Description,
+                SizeId = (int)model.SizeId!,
+                Price = model.Price, 
+                
+            };
+
+            if (model.ShoeUrlImage != null)
+            {
+                shoe.ShoeUrlImage = await imageService.UploadImageToShoe(model.ShoeUrlImage!, "FootTrapProject", shoe);
+            }
+
+            await context.Shoes.AddAsync(shoe);
+            await context.SaveChangesAsync();
         }
     }
 }
