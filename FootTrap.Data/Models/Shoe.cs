@@ -35,8 +35,6 @@ namespace FootTrap.Data.Models
         [ForeignKey(nameof(Size))]
         public int SizeId { get; set; }
 
-        public Size Size { get; set; }
-
 
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
@@ -49,5 +47,6 @@ namespace FootTrap.Data.Models
         public bool IsActive { get; set; }
 
         public ICollection<OrderShoe> OrderShoe { get; set; }
+        public ICollection<SizeShoe> SizeShoe { get; set; }
     }
 }

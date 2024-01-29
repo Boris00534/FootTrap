@@ -7,51 +7,99 @@
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Homies.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/font/font-awesome.min.css" asp-append-version="true" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow">
+    <header class="header_section">
+        <div class="header_top">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">FootTrap</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        @if (User.IsInRole("Customer"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Shoes" asp-action="All">Shoes</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Shoes" asp-action="Add">Add Shoe</a>
-                            </li>
-                        }
-                       
-                    </ul>
-                    <partial name="_LoginPartial" />
+                <div class="top_nav_container">
+                    <div class="contact_nav">
+                        <a href="">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            <span>
+                                Call : +01 123455678990
+                            </span>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <span>
+                                Email : bohd110205@gmail.com
+                            </span>
+                        </a>
+                    </div>
+                    <div class="user_option_box">
+                        <a href="" class="account-link">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span>
+                                My Account
+                            </span>
+                        </a>
+                        <a href="" class="cart-link">
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <span>
+                                Cart
+                            </span>
+                        </a>
+                    </div>
                 </div>
+
             </div>
-        </nav>
+        </div>
+        <div class="header_bottom">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                    <a class="navbar-brand" href="index.html">
+                        <span>
+                            Minics
+                        </span>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class=""> </span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="about.html"> About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="product.html">Products</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="why.html">Why Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="testimonial.html">Testimonial</a>
+                            </li>
+                        </ul>
+                        <partial name="_LoginPartial" />
+                    </div>
+                </nav>
+            </div>
+        </div>
     </header>
 
 
     @RenderBody()
+
+    <footer class="footer_section">
+        <div class="container">
+            <p>
+                &copy; <span id="displayYear"></span> All Rights Reserved By
+                <a href="">Foot Trap</a>
+            </p>
+        </div>
+    </footer>
 
     <script src="https://kit.fontawesome.com/b9403dda92.js" crossorigin="anonymous"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
