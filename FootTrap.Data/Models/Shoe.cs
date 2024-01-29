@@ -32,10 +32,6 @@ namespace FootTrap.Data.Models
 
         public Category Category { get; set; }
 
-        [ForeignKey(nameof(Size))]
-        public int SizeId { get; set; }
-
-
         [MaxLength(DescriptionMaxLength)]
         public string Description { get; set; }
 

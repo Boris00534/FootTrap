@@ -20,14 +20,12 @@
             <span asp-validation-for="@Model.Price" class="text-danger"></span>
         </div>
         <div class="mb-3">
-            <label asp-for="@Model.SizeId" class="form-label-add-edit text-light">Size</label>
-            <select asp-for="@Model.SizeId" class="form-control" aria-required="true">
-                @foreach (var size in Model.Sizes)
+            <select asp-for="SizeIds" data-placeholder="Размери" multiple class="form-control chosen-select choices-multiple-remove-button">
+                @foreach (var a in Model.Sizes)
                 {
-                    <option value="@size.Id">@size.Number</option>
+                    <option value="@a.Id">@a.Number</option>
                 }
             </select>
-            <span asp-validation-for="@Model.CategoryId" class="text-danger"></span>
         </div>
        
         <div class="mb-3">

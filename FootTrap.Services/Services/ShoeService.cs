@@ -25,7 +25,7 @@ namespace FootTrap.Services.Services
         {
             IQueryable<Shoe> shoesQuery = context.Shoes
                 .Include(s => s.Category)
-                .Include(s => s.Size)
+                .Include(s => s.SizeShoe)
                 .Where(s => s.IsActive);
 
 
@@ -54,7 +54,6 @@ namespace FootTrap.Services.Services
                     Name = s.Name,
                     Price = s.Price, 
                     ShoePictureUrl = s.ShoeUrlImage, 
-                    Size = s.Size.Number
 
                 })
                 .ToListAsync();
@@ -74,7 +73,6 @@ namespace FootTrap.Services.Services
                 CategoryId = model.CategoryId,
                 Name = model.Name,
                 Description = model.Description,
-                SizeId = (int)model.SizeId!,
                 Price = model.Price, 
                 
             };

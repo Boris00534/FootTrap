@@ -30,7 +30,7 @@ namespace FootTrap.Services.ViewModels.Shoes
 
         public IFormFile? ShoeUrlImage { get; set; }
 
-        public int? SizeId { get; set; }
+        public List<int> SizeIds { get; set; }
 
         public ICollection<SizeViewModel> Sizes { get; set; }
 

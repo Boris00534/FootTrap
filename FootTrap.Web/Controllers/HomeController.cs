@@ -18,7 +18,7 @@ namespace FootTrap.Web.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult WhyUs()
         {
             return View();
         }

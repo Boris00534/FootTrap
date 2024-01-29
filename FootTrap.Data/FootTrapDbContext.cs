@@ -39,6 +39,8 @@ namespace FootTrap.Data
         {
             builder.Entity<OrderShoe>()
                 .HasKey(os => new { os.OrderId, os.ShoeId });
+            builder.Entity<SizeShoe>()
+                .HasKey(os => new { os.SizeId, os.ShoeId });
 
 
             builder.ApplyConfiguration(new CategoryConfiguration());
