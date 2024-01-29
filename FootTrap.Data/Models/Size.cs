@@ -11,14 +11,13 @@ namespace FootTrap.Data.Models
     {
         public Size()
         {
-            this.SizeShoe = new HashSet<SizeShoe>();
-           
+            this.Shoes = new HashSet<Shoe>();
         }
         [Key]
         public int Id { get; set; }
 
         public int Number { get; set; }
 
-        public ICollection<SizeShoe> SizeShoe { get; set; }
+        public ICollection<Shoe> Shoes { get; set; }
     }
 }
