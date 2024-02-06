@@ -8,7 +8,6 @@ using FootTrap.Services.ViewModels.Category;
 using FootTrap.Services.ViewModels.Size;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using static FootTrap.Common.ModelValidationConstants.ShoeConstants;
 
 namespace FootTrap.Services.ViewModels.Shoes
 {
@@ -19,10 +18,10 @@ namespace FootTrap.Services.ViewModels.Shoes
             this.Sizes = new HashSet<SizeViewModel>();
             this.Categories = new HashSet<CategoryViewModel>();
         }
-        [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
+        [StringLength(30, MinimumLength = 4)]
         public string Name { get; set; }
 
-        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
+        [StringLength(250, MinimumLength = 10)]
         public string Description { get; set; }
 
         [Precision(18,2)]

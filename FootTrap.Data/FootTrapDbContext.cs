@@ -26,14 +26,14 @@ namespace FootTrap.Data
 
         }
 
-        public DbSet<Category> Category { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<OrderShoe> OrdersShoes { get; set; }
-        public DbSet<Payment> Payments { get; set; }
-        public DbSet<Shoe> Shoes { get; set; }
+        public DbSet<Category> Category { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
+        public DbSet<OrderShoe> OrdersShoes { get; set; } = null!;
+        public DbSet<Payment> Payments { get; set; } = null!;
+        public DbSet<Shoe> Shoes { get; set; } = null!;
 
-        public DbSet<Size> Sizes { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Size> Sizes { get; set; } = null!;
+        public DbSet<Customer> Customers { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

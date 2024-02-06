@@ -10,13 +10,13 @@ namespace FootTrap.Data.Models
     public class OrderShoe
     {
         [ForeignKey(nameof(Order))]
-        public string OrderId { get; set; }
+        public string OrderId { get; set; } = null!;
 
-        public Order Order { get; set; }
+        public Order Order { get; set; } = null!;
 
         [ForeignKey(nameof(Shoe))]
-        public string ShoeId { get; set; }
+        public string ShoeId { get; set; } = null!;
 
-        public Shoe Shoe { get; set;}
+        public Shoe Shoe { get; set; } = null!;
     }
 }

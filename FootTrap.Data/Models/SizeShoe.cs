@@ -12,11 +12,11 @@ namespace FootTrap.Data.Models
         [ForeignKey(nameof(Size))]
         public int SizeId { get; set; }
 
-        public Size Size { get; set; }
+        public Size Size { get; set; } = null!;
 
         [ForeignKey(nameof(Shoe))]
-        public string ShoeId { get; set; }
+        public string ShoeId { get; set; } = null!;
 
-        public Shoe Shoe { get; set; }
+        public Shoe Shoe { get; set; } = null!;
     }
 }

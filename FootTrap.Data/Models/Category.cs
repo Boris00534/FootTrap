@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FootTrap.Common.ModelValidationConstants.CategoryConstants;
 
 namespace FootTrap.Data.Models
 {
@@ -18,7 +17,7 @@ namespace FootTrap.Data.Models
         [Key]
         public string Id { get; set; }
 
-        [MaxLength(NameMaxLength)]
-        public string Name { get; set; }
+        [MaxLength(50)]
+        public string Name { get; set; } = null!;
     }
 }

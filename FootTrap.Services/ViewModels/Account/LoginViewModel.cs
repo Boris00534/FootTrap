@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FootTrap.Common.ModelValidationConstants.UserConstants;
 
 namespace FootTrap.Services.ViewModels.Account
 {
@@ -12,12 +11,12 @@ namespace FootTrap.Services.ViewModels.Account
     {
         [Required]
         [EmailAddress]
-        [StringLength(EmailMaxLength, MinimumLength = EmailMinLength)]
+        [StringLength(50, MinimumLength = 5)]
         public string Email { get; set; } = null!;
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength)]
+        [StringLength(30, MinimumLength = 3)]
         public string Password { get; set; } = null!;
     }
 }

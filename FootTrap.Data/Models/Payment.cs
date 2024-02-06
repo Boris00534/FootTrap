@@ -5,7 +5,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FootTrap.Common.ModelValidationConstants.PaymentConstants;
 
 namespace FootTrap.Data.Models
 {
@@ -19,24 +18,24 @@ namespace FootTrap.Data.Models
         public string Id { get; set; }
 
         [ForeignKey(nameof(Customer))]
-        public string CustomerId { get; set; }
+        public string CustomerId { get; set; } = null!;
 
-        public Customer Customer { get; set; }
+        public Customer Customer { get; set; } = null!;
 
         [ForeignKey(nameof(Order))]
         public string? OrderId { get; set; }
         
         public Order? Order { get; set; }
 
-        [MaxLength(CardNumberMaxLength)]
-        public string CardNumber { get; set; }
+        [MaxLength(25)]
+        public string CardNumber { get; set; } = null!;
 
-        [MaxLength(CardHolderMaxLength)]
-        public string CardHolder { get; set; }
+        [MaxLength(20)]
+        public string CardHolder { get; set; } = null!;
 
         public DateTime ExpityDate { get; set; }
 
-        [MaxLength(CardHolderMaxLength)]
-        public string SecurityCode { get; set; }
+        [MaxLength(6)]
+        public string SecurityCode { get; set; } = null!;
     }
 }

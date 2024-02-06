@@ -26,7 +26,7 @@ namespace FootTrap.Data.Models
         
         [Required]
         [ForeignKey(nameof(User))] 
-        public string UserId { get; set; } = null !;
+        public string UserId { get; set; } = null!;
         public User User { get; set; } = null!;
         public bool IsActive { get; set; }
 

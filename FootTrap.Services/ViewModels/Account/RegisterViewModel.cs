@@ -5,50 +5,50 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using static FootTrap.Common.ModelValidationConstants.UserConstants;
+
 
 namespace FootTrap.Services.ViewModels.Account
 {
     public class RegisterViewModel
     {
         [Required]
-        [StringLength(FirstNameMaxLength, MinimumLength = FirstNameMinLength)]
+        [StringLength(30, MinimumLength = 4)]
         public string FirstName { get; set; } = null!;
 
         [Required]
-        [StringLength(LastNameMaxLength, MinimumLength = LastNameMinLength)]
+        [StringLength(30, MinimumLength = 4)]
         public string LastName { get; set; } = null!;
 
 
         [Required]
         [EmailAddress]
-        [StringLength(EmailMaxLength, MinimumLength = EmailMinLength)]
+        [StringLength(50, MinimumLength = 5)]
         public string Email { get; set; } = null!;
 
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength)]
+        [StringLength(30, MinimumLength = 3)]
         public string Password { get; set; } = null!;
 
         [Required]
         [Compare(nameof(Password))]
         [DataType(DataType.Password)]
-        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength)]
+        [StringLength(30, MinimumLength = 4)]
         public string PasswordRepeat { get; set; } = null!;
 
         [Required]
         public string PhoneNumber { get; set; } = null!;
 
         [Required]
-        [StringLength(CountryMaxLength, MinimumLength = CountryMinLength)]
+        [StringLength(100, MinimumLength = 3)]
         public string Country { get; set; } = null!;
 
         [Required]
-        [StringLength(CityMaxLength, MinimumLength = CityMinLength)]
+        [StringLength(200, MinimumLength = 5)]
         public string City { get; set; } = null!;
 
         [Required]
-        [StringLength(AddressMaxLength, MinimumLength = AddressMinLength)]
+        [StringLength(200, MinimumLength = 5)]
         public string Address { get; set; } = null!;
 
         public IFormFile? ProfilePicture { get; set; }

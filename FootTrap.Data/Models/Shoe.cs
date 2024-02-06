@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FootTrap.Common.ModelValidationConstants.ShoeConstants;
 
 namespace FootTrap.Data.Models
 {
@@ -24,21 +23,21 @@ namespace FootTrap.Data.Models
         [Key]
         public string Id { get; set; }
 
-        [MaxLength(NameMaxLength)]
-        public string Name { get; set; }
+        [MaxLength(50)]
+        public string Name { get; set; } = null!;
 
         [ForeignKey(nameof(Category))]
-        public string CategoryId { get; set; }
+        public string CategoryId { get; set; } = null!;
 
         public Category Category { get; set; }
 
-        [MaxLength(DescriptionMaxLength)]
-        public string Description { get; set; }
+        [MaxLength(250)]
+        public string Description { get; set; } = null!;
 
         [Precision(18,2)]
         public decimal Price { get; set; }
 
-        public string ShoeUrlImage { get; set; }
+        public string ShoeUrlImage { get; set; } = null!;
 
         public bool IsActive { get; set; }
 

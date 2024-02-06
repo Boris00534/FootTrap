@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static FootTrap.Common.ModelValidationConstants.OrderConstants;
 
 namespace FootTrap.Data.Models
 {
@@ -25,19 +24,19 @@ namespace FootTrap.Data.Models
 
         [Required]
         [EnumDataType(typeof(OrderStatusEnum))]
-        public string Status { get; set; }
+        public string Status { get; set; } = null!;
 
         [ForeignKey(nameof(Customer))]
-        public string CustomerId { get; set; }
+        public string CustomerId { get; set; } = null!;
 
-        public Customer Customer { get; set; }
+        public Customer Customer { get; set; } = null!;
 
         public DateTime OrderTime { get; set; }
 
         public DateTime? DeliveryTime { get; set; }
 
-        [MaxLength(DeliveryAddressMaxLength)]
-        public string DeliveryAddress { get; set; }
+        [MaxLength(100)]
+        public string DeliveryAddress { get; set; } = null!;
 
         public decimal Price { get; set; }
 
