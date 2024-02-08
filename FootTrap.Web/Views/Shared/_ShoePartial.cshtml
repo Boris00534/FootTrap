@@ -1,32 +1,39 @@
 ﻿@using FootTrap.Web.Extensions
 @model FootTrap.Services.ViewModels.Shoes.ShoeViewModel
 
-<div class="col-sm-6 col-lg-4">
-    <div class="box">
-        <div class="img-box">
-            <img src="@Model.ShoePictureUrl" alt="">
-            <a href="" class="add_cart_btn">
-                <span>
-                    Add To Cart
-                </span>
+
+
+<div class="col-lg-4 col-md-6" style="margin-left: 50px;">
+    <div class="product-card link-effect pe-3 pb-3">
+        <figure class="zoom-effect">
+            <a class="zoom-in" asp-action="Details" asp-controller="Shoes" asp-route-id="@Model.Id">
+                <img src="@Model.ShoePictureUrl" alt="stories" class="lgpostImg img-fluid" style="max-width: 80%;height: 80%;">
             </a>
+        </figure>
+        <div class="story-title-wrap my-3 d-flex justify-content-between" style="max-width: 80%;">
+            <h3 class="story-title" style="height: fit-content;"><a asp-action="Details" asp-controller="Shoes" asp-route-id="@Model.Id">@Model.Name</a></h3>
+            <a class="price" data-after="ADD TO CART">
+                <span>$ @Model.Price</span>
+            </a>
+            
         </div>
-        <div class="detail-box">
-            <h5>
-                @Model.Name
-            </h5>
-            <div class="product_info">
-                <h5>
-                    <span>$</span> @Model.Price
-                </h5>
-                <div class="star_container">
-                    @* <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i>
-                    <i class="fa fa-star" aria-hidden="true"></i> *@
+
+        <div class="d-flex">
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="btn_box">
+                    <a href="" class="view_more-link">
+                        Edit
+                    </a>
                 </div>
-            </div>
+                <div class="btn_box-delete" style="margin-left: 20px;">
+                    <a href="" class="view_more-link">
+                        Delete
+                    </a>
+                </div>
+            }
         </div>
+        
+        
     </div>
 </div>

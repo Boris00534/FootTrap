@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Homies.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/font-awesome.min.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/css/font-awesome.min.css" asp-append-version="true" /> *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     @await RenderSectionAsync("Styles", required: false)
 </head>
@@ -34,7 +33,7 @@
                         </a>
                     </div>
                     <div class="user_option_box">
-                        @if(User.Identity.IsAuthenticated)
+                        @if(User.Identity!.IsAuthenticated)
                         {
                             <a href="" class="account-link">
                                 <i class="fa fa-user" aria-hidden="true"></i>
@@ -73,12 +72,16 @@
                             <li class="nav-item active">
                                 <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                             </li>
-                            <li class="nav-item">
+                            @* <li class="nav-item">
                                 <a class="nav-link" href="about.html"> About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-controller="Shoes" asp-action="All">Products</a>
-                            </li>
+                            </li> *@
+                            @if(User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Shoes" asp-action="All">Products</a>
+                                </li>
+                            }
+                            
                             <li class="nav-item">
                                 <a class="nav-link" asp-action="WhyUs" asp-controller="Home">Why Us</a>
                             </li>

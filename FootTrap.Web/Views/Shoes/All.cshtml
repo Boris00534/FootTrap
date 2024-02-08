@@ -1,12 +1,15 @@
-﻿@model FootTrap.Services.ViewModels.Shoes.ShoesQueryModel;
-
+﻿@using FootTrap.Services.ViewModels.Shoes
+@model ShoesQueryModel
 
 <form method="get">
-    <div class="row" style="margin-left: 140px;">
-        <div class="form-group col-md-3 d-flex justify-content-between">
+    <h1 class="text-black text-center">Our Products</h1>
+    <div class="row" style="margin-left: 180px; margin-top: 1em;">
+
+        <div class="form-group col-md-3 justify-content-between">
+
             <div class="form-group">
-                <label asp-for="Category"></label>
-                <select asp-for="Category" class="form-control">
+                <label asp-for="Category" class="tech-label">Category</label>
+                <select asp-for="Category" class="tech-select form-control">
                     <option value="">All</option>
                     @foreach (var category in Model.Categories)
                     {
@@ -14,98 +17,73 @@
                     }
                 </select>
             </div>
-
-            <div class="form-group">
-                <label asp-for="ShoesPerPage"></label>
-                <select asp-for="ShoesPerPage" class="form-control">
-                    <option value="3">3</option>
-                    <option value="6">6</option>
-                    <option value="9">9</option>
-                </select>
-            </div>
         </div>
 
-        <div class="form-group col-md-3">
-            <label asp-for="SearchString"></label>
-            <input asp-for="SearchString" class="form-control" placeholder="Search">
+        <div class="form-group col-md-4">
+            <label asp-for="SearchString" class="tech-label">Търсене</label>
+            <input asp-for="@Model.SearchString" class="tech-select form-control" placeholder="Търсене" />
         </div>
 
         <div class="col-md-3">
             <div class="form-group mt-3 p-2">
-                <button type="submit" class="btn btn-light">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-search text-black" viewBox="0 0 16 16">
+                <button type="submit" class="btn btn-light mt-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-search text-black" viewBox="0 0 16 16">
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                     </svg>
                 </button>
             </div>
         </div>
+
     </div>
 </form>
 
+<div id="carouselExampleControls" style="margin-top: 1em" class="carousel">
+    <div class="carousel-inner">
+        <div class="row">
+            @if (Model.Shoes.Count() != 0)
+            {
+                var first = Model.Shoes.First();
 
-@{
-    int previousPage = Model.CurrentPage - 1;
-    if (previousPage < 1)
-    {
-        previousPage = 1;
-    }
+                <div class="carousel-item active">
+                    <partial name="_ShoePartial" model="@first" />
+                </div>
 
-    int maxPage = (int)Math.Ceiling((double)Model.TotalShoes /
-        Model.ShoesPerPage);
-}
+                @for (int i = 1; i < Model.Shoes.Count(); i++)
+                {
+                    <div class="carousel-item">
+                        <partial name="_ShoePartial" model="Model.Shoes[i]" />
+                    </div>
+                }
+            }
+            else
+            {
 
-<div class="row mb-4">
-    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-start">
-        <a class="btn btn-light btn-rounded @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
-           asp-controller="Shoes"
-           asp-action="All"
-           asp-route-currentPage="@previousPage"
-           asp-route-category="@Model.Category"
-           asp-route-searchTerm="@Model.SearchString"><<</a>
+                <h1 class="text-dark text-center" style="margin-left: 35%; margin-bottom: 100px; margin-top: 20px;">Няма обувки съвпадащи с вашето търсене</h1>
+
+
+            }
+        </div>
+        
+        <div class="carousel-item" style="width: 50px;">
+        </div>
+
     </div>
-
-    @{
-        bool shouldNextPageBeDisabled = Model.CurrentPage == maxPage ||
-        !Model.Shoes.Any();
-    }
-
-    <div class="col-md-6 d-grid gap-2 d-md-flex justify-content-md-end">
-        <a class="btn btn-light btn-rounded
-           @(shouldNextPageBeDisabled ? "disabled" : string.Empty)"
-           asp-controller="Shoes"
-           asp-action="All"
-           asp-route-currentPage="@(Model.CurrentPage + 1)"
-           asp-route-category="@Model.Category"
-           asp-route-searchTerm="@Model.SearchString">>></a>
-    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
 
-@if (!Model.Shoes.Any())
-{
-    <h2 class="text-center text-black">No shoes found by the given criteria!</h2>
-}
-else
-{
-    <section class="product_section layout_padding">
-        <div class="container">
-            <div class="heading_container heading_center">
-                <h2>
-                    Our Products
-                </h2>
-            </div>
-            <div class="row">
-                @foreach (var shoe in Model.Shoes)
-                {
-                    <partial name="_ShoePartial" model="@shoe" />
-                }
-            </div>
-        </div>
-    </section>
-}
-
-
 @section Styles {
-    <link rel="stylesheet" href="~/css/dish.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/shoes.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/shoesCard.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
 }
 
-
+@section Scripts {
+    <script src="~/js/carousel.js" asp-append-version="true"></script>
+}

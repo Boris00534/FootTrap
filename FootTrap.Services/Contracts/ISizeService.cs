@@ -10,5 +10,7 @@ namespace FootTrap.Services.Contracts
     public interface ISizeService
     {
         Task<List<SizeViewModel>> GetAllSizesAsync();
+
+        Task AddSizesToShoeAsync(List<int> sizesIds, string shoeId);
     }
 }

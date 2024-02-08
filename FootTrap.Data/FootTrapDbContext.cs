@@ -32,6 +32,8 @@ namespace FootTrap.Data
         public DbSet<Payment> Payments { get; set; } = null!;
         public DbSet<Shoe> Shoes { get; set; } = null!;
 
+        public DbSet<SizeShoe> SizeShoes { get; set; } = null!;
+
         public DbSet<Size> Sizes { get; set; } = null!;
         public DbSet<Customer> Customers { get; set; } = null!;
 

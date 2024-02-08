@@ -24,19 +24,19 @@ namespace FootTrap.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> All(ShoesQueryModel model)
         {
-            var userId = User.GetId();
-            bool isCustomer = await userService.IsCustomerAsync(userId);
+            //var userId = User.GetId();
+            //bool isCustomer = await userService.IsCustomerAsync(userId);
 
-            if (!isCustomer && !User.IsInRole("Admin"))
-            {
-                return RedirectToAction("Index", "Home");
-            }
+            //if (!isCustomer && !User.IsInRole("Admin"))
+            //{
+            //    return RedirectToAction("Index", "Home");
+            //}
 
             try
             {
                 AllShoesFilteredAndPaged serviceModel = await shoeService.GetAllShoesFilteredAndPagedAsync(model);
                 model.TotalShoes = serviceModel.TotalShoes;
-                model.Shoes = serviceModel.Shoes;
+                model.Shoes = serviceModel.Shoes.ToList();
                 model.Categories = await categoryService.GetAllCategoryNamesAsync();
 
                 return View(model);
@@ -52,7 +52,6 @@ namespace FootTrap.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-
             if (!User.IsInRole("Admin"))
             {
                 return RedirectToAction("Index", "Home");
@@ -81,11 +80,31 @@ namespace FootTrap.Web.Controllers
                 return View(model);
             }
 
-            await shoeService.AddAsync(model);
+            string shoeId = await shoeService.AddAsync(model);
+
+            await sizeService.AddSizesToShoeAsync(model.SizeIds, shoeId);
 
             return RedirectToAction("All");
 
 
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(string id)
+        {
+            bool isExists = await shoeService.IsExistsAsync(id);
+            if (!isExists)
+            {
+                return RedirectToAction("All");
+            }
+
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            var model = await shoeService.GetDetailsForShoeAsync(id);
+
+            return View(model);
         }
     }
 }

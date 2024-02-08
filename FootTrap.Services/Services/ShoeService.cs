@@ -7,6 +7,7 @@ using FootTrap.Data;
 using FootTrap.Data.Models;
 using FootTrap.Services.Contracts;
 using FootTrap.Services.ViewModels.Shoes;
+using FootTrap.Services.ViewModels.Size;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootTrap.Services.Services
@@ -66,7 +67,7 @@ namespace FootTrap.Services.Services
             };
         }
 
-        public async Task AddAsync(ShoeFromModel model)
+        public async Task<string> AddAsync(ShoeFromModel model)
         {
             var shoe = new Shoe()
             {
@@ -84,6 +85,41 @@ namespace FootTrap.Services.Services
 
             await context.Shoes.AddAsync(shoe);
             await context.SaveChangesAsync();
+
+            return shoe.Id;
+        }
+
+        public async Task<DetailsShoeViewModel> GetDetailsForShoeAsync(string shoeId)
+        {
+            var shoe = await context.Shoes
+                .Include(sh => sh.Category)
+                .Include(sh => sh.SizeShoe)
+                .Select(sh => new DetailsShoeViewModel()
+                {
+                    Id = shoeId,
+                    Name = sh.Name,
+                    Description = sh.Description,
+                    Price = sh.Price,
+                    Category = sh.Category.Name,
+                    Sizes = sh.SizeShoe.Select(s => new SizeViewModel()
+                    {
+                        Id = s.Size.Id, 
+                        Number = s.Size.Number
+                    })
+                    .ToList(), 
+                    ShoePictureUrl = sh.ShoeUrlImage
+
+                })
+                .FirstOrDefaultAsync(sh => sh.Id == shoeId);
+
+            return shoe;
+              
+
+        }
+
+        public async Task<bool> IsExistsAsync(string id)
+        {
+            return await context.Shoes.AnyAsync(sho => sho.Id == id);
         }
     }
 }

@@ -11,6 +11,10 @@ namespace FootTrap.Services.Contracts
     {
         Task<AllShoesFilteredAndPaged> GetAllShoesFilteredAndPagedAsync(ShoesQueryModel model);
 
-        Task AddAsync(ShoeFromModel model);
+        Task<string> AddAsync(ShoeFromModel model);
+
+        Task<DetailsShoeViewModel> GetDetailsForShoeAsync(string shoeId);
+
+        Task<bool> IsExistsAsync(string id);
     }
 }

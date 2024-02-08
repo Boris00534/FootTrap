@@ -11,8 +11,8 @@ namespace FootTrap.Services.ViewModels.Shoes
     {
         public ShoesQueryModel()
         {
-            this.Shoes = new HashSet<ShoeViewModel>();
-            this.Categories = new HashSet<string>();
+            this.Shoes = new List<ShoeViewModel>();
+            this.Categories = new List<string>();
             this.CurrentPage = 1;
             this.ShoesPerPage = 6;
         }
@@ -29,8 +29,8 @@ namespace FootTrap.Services.ViewModels.Shoes
 
         public int TotalShoes { get; set; }
 
-        public IEnumerable<string> Categories { get; set; }
+        public List<string> Categories { get; set; }
 
-        public IEnumerable<ShoeViewModel> Shoes { get; set; }
+        public List<ShoeViewModel> Shoes { get; set; }
     }
 }
