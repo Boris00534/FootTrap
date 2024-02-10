@@ -104,6 +104,9 @@
             border-radius: 40px;
             float: right;
         }
+        .container-shoe .details a:hover {
+           background-color: grey;
+        }
 
 .product-colors span {
     width: 26px;
