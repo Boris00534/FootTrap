@@ -10,6 +10,23 @@
         <p class="product-description">@Model.Description</p>
     </div>
     <div class="product-price">@Model.Price</div>
+    <div class="product-quantity">
+        @if (!Model.IsEnabled)
+        {
+            <input type="text" disabled="disabled" aria-valuemin="1" value="@Model.Size" />
+        }
+        else
+        {
+            <select asp-for="@Model.Size" class="form-control" aria-required="true">
+                @foreach (var size in Model.Sizes)
+                {
+                    <option value="@size.Id">@size.Number</option>
+                }
+            </select>
+        }
+
+
+    </div>
     <div class="product-removal">
         <button class="remove-product">
             Remove

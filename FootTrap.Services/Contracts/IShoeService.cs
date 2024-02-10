@@ -16,5 +16,9 @@ namespace FootTrap.Services.Contracts
         Task<DetailsShoeViewModel> GetDetailsForShoeAsync(string shoeId);
 
         Task<bool> IsExistsAsync(string id);
+
+        List<OrderShoeViewModel> GetCartShoes(string username);
+
+        Task AddShoeToCart(string username, string shoeId);
     }
 }

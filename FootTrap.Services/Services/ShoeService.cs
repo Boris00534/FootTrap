@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using FootTrap.Data;
 using FootTrap.Data.Models;
 using FootTrap.Services.Contracts;
+using FootTrap.Services.Extensions;
 using FootTrap.Services.ViewModels.Shoes;
 using FootTrap.Services.ViewModels.Size;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace FootTrap.Services.Services
@@ -16,11 +18,13 @@ namespace FootTrap.Services.Services
     {
         private readonly FootTrapDbContext context;
         private readonly IImageService imageService;
+        private readonly IHttpContextAccessor accessor;
 
-        public ShoeService(FootTrapDbContext context, IImageService imageService)
+        public ShoeService(FootTrapDbContext context, IImageService imageService, IHttpContextAccessor accessor)
         {
             this.context = context;
             this.imageService = imageService;
+            this.accessor = accessor;
         }
         public async Task<AllShoesFilteredAndPaged> GetAllShoesFilteredAndPagedAsync(ShoesQueryModel model)
         {
@@ -120,6 +124,16 @@ namespace FootTrap.Services.Services
         public async Task<bool> IsExistsAsync(string id)
         {
             return await context.Shoes.AnyAsync(sho => sho.Id == id);
+        }
+
+        public List<OrderShoeViewModel> GetCartShoes(string username)
+        {
+            return accessor.HttpContext.Session.GetObjectFromJson<List<OrderShoeViewModel>>($"cart{username}");
+        }
+
+        public Task AddShoeToCart(string username, string shoeId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
