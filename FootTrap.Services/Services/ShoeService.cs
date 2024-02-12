@@ -55,10 +55,10 @@ namespace FootTrap.Services.Services
                 .Take(model.ShoesPerPage)
                 .Select(s => new ShoeViewModel()
                 {
-                    Id = s.Id, 
+                    Id = s.Id,
                     Name = s.Name,
-                    Price = s.Price, 
-                    ShoePictureUrl = s.ShoeUrlImage, 
+                    Price = s.Price,
+                    ShoePictureUrl = s.ShoeUrlImage,
 
                 })
                 .ToListAsync();
@@ -78,8 +78,8 @@ namespace FootTrap.Services.Services
                 CategoryId = model.CategoryId,
                 Name = model.Name,
                 Description = model.Description,
-                Price = model.Price, 
-                
+                Price = model.Price,
+
             };
 
             if (model.ShoeUrlImage != null)
@@ -107,17 +107,17 @@ namespace FootTrap.Services.Services
                     Category = sh.Category.Name,
                     Sizes = sh.SizeShoe.Select(s => new SizeViewModel()
                     {
-                        Id = s.Size.Id, 
+                        Id = s.Size.Id,
                         Number = s.Size.Number
                     })
-                    .ToList(), 
+                    .ToList(),
                     ShoePictureUrl = sh.ShoeUrlImage
 
                 })
                 .FirstOrDefaultAsync(sh => sh.Id == shoeId);
 
             return shoe;
-              
+
 
         }
 
@@ -126,14 +126,47 @@ namespace FootTrap.Services.Services
             return await context.Shoes.AnyAsync(sho => sho.Id == id);
         }
 
-        public List<OrderShoeViewModel> GetCartShoes(string username)
+        public List<OrderShoeViewModel>? GetCartShoes(string username)
         {
             return accessor.HttpContext.Session.GetObjectFromJson<List<OrderShoeViewModel>>($"cart{username}");
         }
 
-        public Task AddShoeToCart(string username, string shoeId)
+        public async Task AddShoeToCart(string username, string shoeId, int size)
         {
-            throw new NotImplementedException();
+            if (accessor.HttpContext.Session.GetObjectFromJson<List<OrderShoeViewModel>>($"cart{username}") == null)
+            {
+                var shoe = await GetShoeForOrderAsync(shoeId, size);
+                List<OrderShoeViewModel> cart = new List<OrderShoeViewModel>();
+                cart.Add(shoe);
+                accessor.HttpContext.Session.SetObjectAsJson($"cart{username}", cart);
+            }
+            else
+            {
+                List<OrderShoeViewModel>? cart = accessor.HttpContext.Session.GetObjectFromJson<List<OrderShoeViewModel>>($"cart{username}");
+                var shoe = await this.GetShoeForOrderAsync(shoeId, size);
+                cart!.Add(shoe);
+                accessor.HttpContext.Session.SetObjectAsJson($"cart{username}", cart);
+            }
+        }
+
+        public async Task<OrderShoeViewModel> GetShoeForOrderAsync(string shoeId, int size)
+        {
+            var shoe = await context.Shoes
+                .Select(sho => new OrderShoeViewModel()
+                {
+                    Id = sho.Id,
+                    Name = sho.Name,
+                    Description = sho.Description,
+                    Price = sho.Price,
+                    Size = size,
+                    ShoeImageUrl = sho.ShoeUrlImage,
+                    IsEnabled = true,
+
+                })
+                .FirstOrDefaultAsync(sh => sh.Id == shoeId);
+
+            return shoe;
+
         }
     }
 }

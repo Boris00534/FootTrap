@@ -29,7 +29,7 @@ namespace FootTrap.Data.Configuration
                 FirstName = "Georgi",
                 LastName = "Ivanov",
                 Email = "georgiivanov@abv.bg",
-                NormalizedEmail = "GEORGIIVAONV@ABV.BG",
+                NormalizedEmail = "GEORGIIVANOV@ABV.BG",
                 UserName = "gosho",
                 NormalizedUserName = "GOSHO",
                 City = "Kazanlak",

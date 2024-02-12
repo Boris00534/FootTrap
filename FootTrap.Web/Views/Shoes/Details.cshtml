@@ -15,14 +15,14 @@
             <p>
                 @Model.Description
             </p>
-            <form id="buy-form" asp-action="Index" asp-controller="Home" method="post">
-                <input type="hidden" value="@Model.Id" />
+            <form id="buy-form" asp-action="AddToCart" asp-controller="Shoes" method="post">
+                <input type="hidden" value="@Model.Id" asp-for="@Model.Id"/>
                 <div class="mb-3">
                     <label class="form-label-add-edit text-dark">Size</label>
-                    <select class="form-control" aria-required="true">
+                    <select class="form-control" aria-required="true" asp-for="@Model.Size">
                         @foreach (var size in Model.Sizes)
                         {
-                            <option value="@size.Id">@size.Number</option>
+                            <option value="@size.Number">@size.Number</option>
                         }
 
                     </select>

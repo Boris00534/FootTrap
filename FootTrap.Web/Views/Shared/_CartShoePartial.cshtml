@@ -2,7 +2,7 @@
 @model OrderShoeViewModel
 
 <div class="product">
-    <div class="product-image">
+    <div class="product-image" style="text-align: left">
         <img src="@Model.ShoeImageUrl">
     </div>
     <div class="product-details">
@@ -11,20 +11,8 @@
     </div>
     <div class="product-price">@Model.Price</div>
     <div class="product-quantity">
-        @if (!Model.IsEnabled)
-        {
-            <input type="text" disabled="disabled" aria-valuemin="1" value="@Model.Size" />
-        }
-        else
-        {
-            <select asp-for="@Model.Size" class="form-control" aria-required="true">
-                @foreach (var size in Model.Sizes)
-                {
-                    <option value="@size.Id">@size.Number</option>
-                }
-            </select>
-        }
 
+        @Model.Size
 
     </div>
     <div class="product-removal">
@@ -34,7 +22,5 @@
 
         <input asp-for="Id" type="hidden" id="dishId" class="ids" value="@Model.Id" />
     </div>
-
-    <div class="product-line-price">Model.Price</div>
 </div>
 

@@ -25,6 +25,8 @@ namespace FootTrap.Services.ViewModels.Shoes
 
         public decimal Price { get; set; }
 
+        public int Size {  get; set; }
+
         public string ShoePictureUrl { get; set; } = null!;
     }
 }

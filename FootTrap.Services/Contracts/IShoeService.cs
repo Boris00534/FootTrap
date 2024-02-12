@@ -17,8 +17,10 @@ namespace FootTrap.Services.Contracts
 
         Task<bool> IsExistsAsync(string id);
 
-        List<OrderShoeViewModel> GetCartShoes(string username);
+        List<OrderShoeViewModel>? GetCartShoes(string username);
 
-        Task AddShoeToCart(string username, string shoeId);
+        Task<OrderShoeViewModel> GetShoeForOrderAsync(string shoeId, int size);
+
+        Task AddShoeToCart(string username, string shoeId, int size);
     }
 }

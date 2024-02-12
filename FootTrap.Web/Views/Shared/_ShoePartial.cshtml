@@ -12,7 +12,7 @@
         </figure>
         <div class="story-title-wrap my-3 d-flex justify-content-between" style="max-width: 80%;">
             <h3 class="story-title" style="height: fit-content;"><a asp-action="Details" asp-controller="Shoes" asp-route-id="@Model.Id">@Model.Name</a></h3>
-            <a class="price" data-after="ADD TO CART">
+            <a asp-action="Details" asp-controller="Shoes" asp-route-id="@Model.Id" class="price" data-after="ADD TO CART">
                 <span>$ @Model.Price</span>
             </a>
             

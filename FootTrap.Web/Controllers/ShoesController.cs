@@ -1,11 +1,12 @@
 ﻿using FootTrap.Services.Contracts;
 using FootTrap.Services.ViewModels.Shoes;
 using FootTrap.Web.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FootTrap.Web.Controllers
 {
-
+    [Authorize]
     public class ShoesController : Controller
     {
         private readonly IShoeService shoeService;
@@ -110,7 +111,41 @@ namespace FootTrap.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Cart()
         {
-            return View();
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            string userName = User.GetUsername();
+            var cartShoes = shoeService.GetCartShoes(userName);
+
+            return View(cartShoes);
+
+        }
+
+        public async Task<IActionResult> AddToCart(DetailsShoeViewModel model)
+        {
+            string shoeId = model.Id;
+            bool isExists = await shoeService.IsExistsAsync(shoeId);
+
+            if (!isExists)
+            {
+                return RedirectToAction("All");
+            }
+
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            string userName = User.GetUsername();
+            //var cartShoes = shoeService.GetCartShoes(userName);
+            //var shoe = await shoeService.GetShoeForOrderAsync(shoeId);
+
+            await shoeService.AddShoeToCart(userName, shoeId, model.Size);
+            return RedirectToAction("Cart");
+
+
         }
     }
 }

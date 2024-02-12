@@ -79,10 +79,10 @@ label {
     border-bottom: 1px solid #eee;
 }
 
-.column-labels .product-image, .column-labels .product-details, .column-labels .product-removal {
+/*.column-labels .product-image, .column-labels .product-details, .column-labels {
     text-indent: -9999px;
 }
-
+*/
 /* Product entries */
 .product {
     margin-bottom: 20px;
@@ -92,6 +92,7 @@ label {
 
     .product .product-image {
         text-align: center;
+        margin-left: 30px;
     }
 
         .product .product-image img {

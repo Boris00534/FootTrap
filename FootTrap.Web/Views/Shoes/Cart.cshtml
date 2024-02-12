@@ -8,14 +8,15 @@
 
     @if (Model != null && Model.Count > 0)
     {
+        decimal subtotal = Math.Round((decimal)Model.Select(d => d.Price).Sum(), 2);
+        decimal tax = Math.Round((decimal)(0.05m * subtotal), 2);
 
         <div class="column-labels">
-            <label class="product-image">Image</label>
+            <label class="product-image" style="margin-left: 30px;">Image</label>
             <label class="product-details">Product</label>
             <label class="product-price">Price</label>
             <label class="product-quantity">Size</label>
             <label class="product-removal">Remove</label>
-            <label class="product-line-price">Total</label>
         </div>
 
         @foreach (var shoe in Model)
@@ -23,14 +24,14 @@
             <partial name="_CartShoePartial" model="@shoe" />
         }
 
-        <div class="totals">
+        <div class="totals" style="margin-right: 40px">
             <div class="totals-item">
                 <label>Subtotal</label>
-                <div class="totals-value" id="cart-subtotal"> @* subtotal *@ </div>
+                <div class="totals-value" id="cart-subtotal"> @subtotal </div>
             </div>
             <div class="totals-item">
                 <label>Tax (5%)</label>
-                <div class="totals-value" id="cart-tax">@* @tax *@</div>
+                <div class="totals-value" id="cart-tax"> @tax </div>
             </div>
             <div class="totals-item">
                 <label>Shipping</label>
@@ -38,12 +39,12 @@
             </div>
             <div class="totals-item totals-item-total">
                 <label>Grand Total</label>
-                <div class="totals-value" id="cart-total">@* @(subtotal + tax + 5) *@</div>
+                <div class="totals-value" id="cart-total">@(subtotal + tax + 5)</div>
             </div>
         </div>
 
 
-        <a asp-action="Payment" asp-controller="Payment" class="checkout">Checkout</a>
+        <a asp-action="Payment" asp-controller="Payment" class="checkout" style="margin-right: 40px;">Checkout</a>
         <a asp-controller="Shoes" asp-action="All" id="continue" class="btn btn-warning text-black cont" style="margin-left: 30px;">Continue Shopping</a>
     }
     else
