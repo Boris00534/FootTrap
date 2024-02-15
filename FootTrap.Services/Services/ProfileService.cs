@@ -13,10 +13,35 @@ namespace FootTrap.Services.Services
     public class ProfileService : IProfileService
     {
         private readonly FootTrapDbContext context;
+        private readonly IImageService imageService;
 
-        public ProfileService(FootTrapDbContext context)
+        public ProfileService(FootTrapDbContext context, IImageService imageService)
         {
             this.context = context;
+            this.imageService = imageService;
+        }
+
+        public async Task EditProfileAsync(string userId, EditProfileViewModel model)
+        {
+            var user = await context.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.Address = model.Address;
+            user.Country = model.Country;
+            user.City = model.City;
+            user.PhoneNumber = model.Phone;
+
+            if(model.ProfilePicture != null)
+            {
+                user.ProfilePictureUrl = await imageService.UploadImageToUser(model.ProfilePicture, "FootTrapProject", user);
+            }
+
+            await context.SaveChangesAsync();
+           
+
         }
 
         public async Task<ProfileViewModel?> GetProfileAsync(string userId)
@@ -39,6 +64,26 @@ namespace FootTrap.Services.Services
                 .FirstOrDefaultAsync();
 
             return profile;
+        }
+
+        public async Task<EditProfileViewModel> GetProfileForEditAsync(string userId)
+        {
+            var profile = await context.Users
+                .Where(u => u.Id == userId)
+                .Select(u => new EditProfileViewModel()
+                {
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    City = u.City,
+                    Country = u.Country,
+                    Address = u.Address,
+                    Phone = u.PhoneNumber,
+                    ProfilePictureUrl = u.ProfilePictureUrl
+                })
+                .FirstOrDefaultAsync();
+
+            return profile!;
         }
     }
 }
