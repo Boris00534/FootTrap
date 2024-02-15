@@ -53,6 +53,7 @@ namespace FootTrap.Web
             builder.Services.AddScoped<IShoeService, ShoeService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ISizeService, SizeService>();
+            builder.Services.AddScoped<IProfileService, ProfileService>();
 
 
             ConfigureCloudaryService(builder.Services, builder.Configuration);

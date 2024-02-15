@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using FootTrap.Web.Extensions
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -35,7 +36,7 @@
                     <div class="user_option_box">
                         @if(User.Identity!.IsAuthenticated)
                         {
-                            <a href="" class="account-link">
+                            <a asp-action="MyProfile" asp-controller="Profile" asp-route-userId="@User.GetId()" class="account-link">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 <span>
                                     My Account
@@ -135,7 +136,7 @@
                             Information
                         </h5>
                         <p>
-                            Eligendi sunt, provident, debitis nemo, facilis cupiditate velit libero dolorum aperiam enim nulla iste maxime corrupti ad illo libero minus.
+                            FootTrap Shoe Shop is a premier destination for footwear enthusiasts, offering a wide range of stylish and comfortable shoes for men, women, and children. Established in 2005, FootTrap has quickly gained a reputation for its exceptional customer service, trendy collections, and affordable prices.
                         </p>
                     </div>
                 </div>

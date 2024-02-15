@@ -13,6 +13,8 @@ namespace FootTrap.Services.Contracts
 
         Task<bool> IsCustomerAsync(string userId);
 
+        Task<bool> IsExistsByIdAsync(string id);
+
         
 
     }

@@ -39,5 +39,13 @@ namespace FootTrap.Services.Services
             return isCustomer;
         }
 
+        public async Task<bool> IsExistsByIdAsync(string id)
+        {
+            var isExists = await context.Users
+                .AnyAsync(u => u.Id == id);
+
+            return isExists;
+             
+        }
     }
 }
