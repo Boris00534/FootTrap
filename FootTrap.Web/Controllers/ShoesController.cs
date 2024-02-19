@@ -4,6 +4,8 @@ using FootTrap.Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using FootTrap.Services.Extensions;
+
 namespace FootTrap.Web.Controllers
 {
     [Authorize]
@@ -22,16 +24,17 @@ namespace FootTrap.Web.Controllers
             this.sizeService = sizeService;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> All(ShoesQueryModel model)
         {
-            //var userId = User.GetId();
-            //bool isCustomer = await userService.IsCustomerAsync(userId);
+            var userId = User.GetId();
+            bool isCustomer = await userService.IsCustomerAsync(userId!);
 
-            //if (!isCustomer && !User.IsInRole("Admin"))
-            //{
-            //    return RedirectToAction("Index", "Home");
-            //}
+            if (!isCustomer && !User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             try
             {
@@ -108,6 +111,7 @@ namespace FootTrap.Web.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Cart()
         {
@@ -115,11 +119,15 @@ namespace FootTrap.Web.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            if (!User.Identity!.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
-            string userName = User.GetUsername();
-            var cartShoes = shoeService.GetCartShoes(userName);
+            string? userName = User.GetUsername();
+            var cartShoes = shoeService.GetCartShoes(userName!);
 
-            return View(cartShoes);
+            return await Task.Run(() =>  View(cartShoes));
 
         }
 
@@ -138,14 +146,46 @@ namespace FootTrap.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            string userName = User.GetUsername();
-            //var cartShoes = shoeService.GetCartShoes(userName);
-            //var shoe = await shoeService.GetShoeForOrderAsync(shoeId);
-
+            string userName = User.GetUsername()!;
             await shoeService.AddShoeToCart(userName, shoeId, model.Size);
             return RedirectToAction("Cart");
 
 
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> RemoveFromCart(string shoeId)
+        {
+            bool isExists = await shoeService.IsExistsAsync(shoeId);
+
+            if (!isExists)
+            {
+                return RedirectToAction("All");
+            }
+
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var shoes = HttpContext.Session.GetObjectFromJson<List<OrderShoeViewModel>>($"cart{User.GetUsername()}");
+
+            if(shoes.Count > 0)
+            {
+                var shoeToRemove = shoes.FirstOrDefault(d => d.Id == shoeId);
+                if (shoes.Remove(shoeToRemove))
+                {
+                    HttpContext.Session.SetObjectAsJson($"cart{User.GetUsername()}", shoes);
+                }
+                else
+                {
+                    HttpContext.Session.SetObjectAsJson($"cart{User.GetUsername()}", shoes);
+
+                    return RedirectToAction("Cart");
+                }
+            }
+
+            return RedirectToAction("Cart");
         }
     }
 }

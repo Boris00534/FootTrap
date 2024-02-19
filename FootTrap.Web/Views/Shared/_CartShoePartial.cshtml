@@ -16,9 +16,9 @@
 
     </div>
     <div class="product-removal">
-        <button class="remove-product">
+        <a asp-action="RemoveFromCart" asp-controller="Shoes" asp-route-shoeId="@Model.Id" class="remove-product">
             Remove
-        </button>
+        </a>
 
         <input asp-for="Id" type="hidden" id="dishId" class="ids" value="@Model.Id" />
     </div>
