@@ -45,7 +45,7 @@ namespace FootTrap.Web.Controllers
 
                 return View(model);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -61,7 +61,7 @@ namespace FootTrap.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ShoeFromModel model = new ShoeFromModel();
+            ShoeFormModel model = new ShoeFormModel();
             model.Categories = await categoryService.GetAllCategoriesAsync();
             model.Sizes = await sizeService.GetAllSizesAsync();
 
@@ -69,7 +69,7 @@ namespace FootTrap.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(ShoeFromModel model)
+        public async Task<IActionResult> Add(ShoeFormModel model)
         {
             if (!User.IsInRole("Admin"))
             {
@@ -186,6 +186,35 @@ namespace FootTrap.Web.Controllers
             }
 
             return RedirectToAction("Cart");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string shoeId)
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return RedirectToAction("All");
+            }
+
+            bool isExists = await shoeService.IsExistsAsync(shoeId);
+
+            if (!isExists)
+            {
+                return RedirectToAction("All");
+            }
+
+            try
+            {
+                var shoe = await shoeService.GetShoeForEditAsync(shoeId);
+
+                return View(shoe);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+
         }
     }
 }

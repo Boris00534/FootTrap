@@ -28,7 +28,7 @@ namespace FootTrap.Web.Controllers
         public async Task<IActionResult> Register()
         {
             RegisterViewModel model = new RegisterViewModel();
-            return View(model);
+            return await Task.Run(() => View(model));
         }
 
         [HttpPost]

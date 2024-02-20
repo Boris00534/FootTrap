@@ -21,8 +21,7 @@ Version: 1.1
     transform: scale(1.08);
 }
 
-/* - Button
-  ------------------------------------------------------------- */
+
 .button {
     border: none;
     width: fit-content;
@@ -71,17 +70,11 @@ button.btn-bg-white {
     color: #949494;
 }
 
-/*--------------------------------------------------------------
-  /** Title Wrap
-  --------------------------------------------------------------*/
 .title-wrap {
     margin-bottom: 24px;
     align-items: center;
 }
 
-/*--------------------------------------------------------------
-  /** Page Title
-  --------------------------------------------------------------*/
 .page-title {
     margin-bottom: 24px;
     align-items: center;
@@ -91,8 +84,6 @@ button.btn-bg-white {
         font-size: 42px;
     }
 
-/* -- Products For Sale Section
-  --------------------------------------------------------------*/
 .product-card h3 {
     margin-bottom: 0;
 }
@@ -115,11 +106,6 @@ a {
     color: #3b3e42;
 }
 
-/* Link Effect
-   - Place anywhere you want your link to animate
-   - Add data-after="Any text" to the link within the class
-   - Use span within the anchor tag for the effect to work
-  ------------------------------------------------------------- */
 .link-effect a {
     position: relative;
     padding: 0;
@@ -259,7 +245,7 @@ a {
         opacity: none;
     }
 
-/* ------ Quantity ------*/
+
 .cart-product-quatity {
     max-width: 200px;
 }
@@ -268,9 +254,7 @@ a {
     padding-left: 10px;
 }
 
-/*--------------------------------------------------------------
-  /** Shop Page
-  --------------------------------------------------------------*/
+
 #newsletter.bg-light #newsletter1:focus {
     border: 1px solid var(--accent-color);
 }
@@ -279,9 +263,6 @@ a {
     border: 0;
 }
 
-/*--------------------------------------------------------------
-  /** Shop Page
-  --------------------------------------------------------------*/
 .sidebar svg.search {
     width: 20px;
     height: 20px;

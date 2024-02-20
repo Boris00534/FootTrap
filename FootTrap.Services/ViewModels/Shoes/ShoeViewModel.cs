@@ -8,10 +8,12 @@ namespace FootTrap.Services.ViewModels.Shoes
 {
     public class ShoeViewModel
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
+        public string Id { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
-        public string ShoePictureUrl { get; set; }
+        public string ShoePictureUrl { get; set; } = null!;
+
+        public string Description { get; set; } = null!;
 
         public decimal Price { get; set; }
 

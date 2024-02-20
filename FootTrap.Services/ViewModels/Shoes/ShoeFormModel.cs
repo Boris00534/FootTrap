@@ -11,21 +11,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FootTrap.Services.ViewModels.Shoes
 {
-    public class ShoeFromModel
+    public class ShoeFormModel
     {
-        public ShoeFromModel()
+        public ShoeFormModel()
         {
             this.Sizes = new HashSet<SizeViewModel>();
             this.Categories = new HashSet<CategoryViewModel>();
+            this.SizeIds = new List<int>();
         }
+
         [StringLength(30, MinimumLength = 4)]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [StringLength(250, MinimumLength = 10)]
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
         [Precision(18,2)]
-        public decimal Price { get; set; }
+        public string Price { get; set; }
 
         public IFormFile? ShoeUrlImage { get; set; }
 

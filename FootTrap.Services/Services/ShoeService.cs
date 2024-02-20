@@ -7,6 +7,7 @@ using FootTrap.Data;
 using FootTrap.Data.Models;
 using FootTrap.Services.Contracts;
 using FootTrap.Services.Extensions;
+using FootTrap.Services.ViewModels.Category;
 using FootTrap.Services.ViewModels.Shoes;
 using FootTrap.Services.ViewModels.Size;
 using Microsoft.AspNetCore.Http;
@@ -59,6 +60,7 @@ namespace FootTrap.Services.Services
                     Name = s.Name,
                     Price = s.Price,
                     ShoePictureUrl = s.ShoeUrlImage,
+                    Description = s.Description,
 
                 })
                 .ToListAsync();
@@ -71,14 +73,14 @@ namespace FootTrap.Services.Services
             };
         }
 
-        public async Task<string> AddAsync(ShoeFromModel model)
+        public async Task<string> AddAsync(ShoeFormModel model)
         {
             var shoe = new Shoe()
             {
-                CategoryId = model.CategoryId,
+                CategoryId = model.CategoryId!,
                 Name = model.Name,
                 Description = model.Description,
-                Price = model.Price,
+                Price = Decimal.Parse(model.Price),
 
             };
 
@@ -165,8 +167,40 @@ namespace FootTrap.Services.Services
                 })
                 .FirstOrDefaultAsync(sh => sh.Id == shoeId);
 
-            return shoe;
+            return shoe!;
 
+        }
+
+        public async Task<ShoeFormModel> GetShoeForEditAsync(string shoeId)
+        {
+            var shoe = await context.Shoes
+                 .Where(sh => sh.Id == shoeId)
+                 .Select(sh => new ShoeFormModel()
+                 {
+                     Name = sh.Name,
+                     Description = sh.Description,
+                     Price = sh.Price.ToString(),
+
+                 })
+                 .FirstOrDefaultAsync();
+
+            shoe!.Sizes = await context.Sizes
+                .Select(s => new SizeViewModel()
+                {
+                    Id = s.Id,
+                    Number = s.Number,
+                })
+                .ToListAsync();
+
+            shoe.Categories = await context.Category
+                .Select(c => new CategoryViewModel()
+                {
+                    Id = c.Id, 
+                    Name = c.Name,
+                })
+                .ToListAsync();
+
+            return shoe;
         }
     }
 }

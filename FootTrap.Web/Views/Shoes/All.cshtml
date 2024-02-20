@@ -37,51 +37,37 @@
     </div>
 </form>
 
-<div id="carouselExampleControls" style="margin-top: 1em" class="carousel">
-    <div class="carousel-inner">
-        <div class="row">
-            @if (Model.Shoes.Count() != 0)
-            {
-                var first = Model.Shoes.First();
-
-                <div class="carousel-item active">
-                    <partial name="_ShoePartial" model="@first" />
-                </div>
-
-                @for (int i = 1; i < Model.Shoes.Count(); i++)
-                {
-                    <div class="carousel-item">
-                        <partial name="_ShoePartial" model="Model.Shoes[i]" />
-                    </div>
-                }
-            }
-            else
-            {
-
-                <h1 class="text-dark text-center" style="margin-left: 35%; margin-bottom: 100px; margin-top: 20px;">Няма обувки съвпадащи с вашето търсене</h1>
+<div class="row">
+    @if (Model.Shoes.Count() != 0)
+    {
+        var first = Model.Shoes.First();
 
 
-            }
-        </div>
-        
-        <div class="carousel-item" style="width: 50px;">
-        </div>
+        <partial name="_ShoePartial" model="@first" />
 
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
+
+        @for (int i = 1; i < Model.Shoes.Count(); i++)
+        {
+
+            <partial name="_ShoePartial" model="Model.Shoes[i]" />
+
+        }
+    }
+    else
+    {
+
+        <h1 class="text-dark text-center" style="margin-bottom: 100px; margin-top: 20px;">Няма обувки съвпадащи с вашето търсене</h1>
+
+
+    }
 </div>
+
 
 @section Styles {
     <link rel="stylesheet" href="~/css/shoes.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/shoesCard.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/css/shoesCard.css" asp-append-version="true" /> *@
     <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/product.css" asp-append-version="true" />
 }
 
 @section Scripts {
