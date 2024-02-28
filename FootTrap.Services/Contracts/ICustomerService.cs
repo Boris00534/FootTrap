@@ -10,5 +10,7 @@ namespace FootTrap.Services.Contracts
     public interface ICustomerService
     {
         Task Create(string userId);
+
+        Task<string?> GetCustomerIdByUserIdAsync(string userId);
     }
 }

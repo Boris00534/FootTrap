@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FootTrap.Data;
 using FootTrap.Data.Models;
 using FootTrap.Services.Contracts;
+using Microsoft.EntityFrameworkCore;
 
 namespace FootTrap.Services.Services
 {
@@ -27,6 +28,14 @@ namespace FootTrap.Services.Services
 
             await context.Customers.AddAsync(customer);
             await context.SaveChangesAsync();
+        }
+
+        public async Task<string?> GetCustomerIdByUserIdAsync(string userId)
+        {
+            var customer = await context.Customers
+                .FirstOrDefaultAsync(c => c.UserId == userId);
+
+            return customer?.Id;
         }
     }
 }

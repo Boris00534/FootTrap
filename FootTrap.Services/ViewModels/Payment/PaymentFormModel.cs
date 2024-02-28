@@ -10,7 +10,7 @@ namespace FootTrap.Services.ViewModels.Payment
     public class PaymentFormModel
     {
         [Required]
-        [StringLength(10, MinimumLength=3)]
+        [StringLength(40, MinimumLength=3)]
         public string CardHolderName { get; set; } = null!;
 
         [Required]

@@ -8,10 +8,14 @@ namespace FootTrap.Web.Controllers
     public class PaymentController : Controller
     {
         private readonly IUserService userService;
+        private readonly IPaymentService paymentService;
+        private readonly ICustomerService customerService;
 
-        public PaymentController(IUserService userService)
+        public PaymentController(IUserService userService, IPaymentService paymentService, ICustomerService customerService)
         {
             this.userService = userService;
+            this.paymentService = paymentService;
+            this.customerService = customerService;
         }
 
         [HttpGet]
@@ -24,7 +28,7 @@ namespace FootTrap.Web.Controllers
             {
                 return RedirectToAction("Login", "Account");
             }
-            if(!User.IsInRole("Admin") || !isCustomer) 
+            if(!isCustomer && !User.IsInRole("Admin")) 
             { 
                 return RedirectToAction("Index", "Home");
             }
@@ -54,7 +58,11 @@ namespace FootTrap.Web.Controllers
                 return View(model);
             }
 
-            return View();
+            string? customerId = await customerService.GetCustomerIdByUserIdAsync(userId!);
+
+            string paymentId = await paymentService.CreatPaymentAsync(model, customerId!);
+
+            return RedirectToAction("Order", "Order");
         }
     }
 }

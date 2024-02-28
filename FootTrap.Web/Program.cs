@@ -54,6 +54,7 @@ namespace FootTrap.Web
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<ISizeService, SizeService>();
             builder.Services.AddScoped<IProfileService, ProfileService>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 
             ConfigureCloudaryService(builder.Services, builder.Configuration);

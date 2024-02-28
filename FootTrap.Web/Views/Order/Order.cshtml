@@ -1,0 +1,43 @@
+﻿@using FootTrap.Services.ViewModels.Order
+@model OrderViewModel
+
+
+<h2 class="text-dark text-center">Order</h2>
+<hr />
+
+<form method="post" asp-action="Order" enctype="multipart/form-data">
+
+    <div class="sopping-cart">
+        <div class="column-labels">
+            <label class="product-image" style="margin-left: 30px;">Image</label>
+            <label class="product-details">Product</label>
+            <label class="product-price">Price</label>
+            <label class="product-quantity">Size</label>
+            <label class="product-removal">Remove</label>
+        </div>
+        @foreach (var shoe in Model.Shoes)
+        {
+            <partial name="_CartShoePartial" model="@shoe" />
+        }
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Address">Address: </label>
+        <input asp-for="Address" type="text" id="address" required />
+    </div>
+    <div class="form-group">
+        <label asp-for="City">City: </label>
+        <input asp-for="City" type="text" id="city" required />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Place Order" />
+    </div>
+
+</form>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/order.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/cart.css" asp-append-version="true" />
+
+}
