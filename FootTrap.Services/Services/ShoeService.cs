@@ -100,6 +100,7 @@ namespace FootTrap.Services.Services
             var shoe = await context.Shoes
                 .Include(sh => sh.Category)
                 .Include(sh => sh.SizeShoe)
+                .Where(sh => sh.Id == shoeId)
                 .Select(sh => new DetailsShoeViewModel()
                 {
                     Id = shoeId,
@@ -116,7 +117,7 @@ namespace FootTrap.Services.Services
                     ShoePictureUrl = sh.ShoeUrlImage
 
                 })
-                .FirstOrDefaultAsync(sh => sh.Id == shoeId);
+                .FirstOrDefaultAsync();
 
             return shoe;
 
