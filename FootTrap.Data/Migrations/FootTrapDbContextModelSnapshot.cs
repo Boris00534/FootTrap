@@ -128,6 +128,9 @@ namespace FootTrap.Data.Migrations
                     b.Property<string>("ShoeId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("ShoeSize")
+                        .HasColumnType("int");
+
                     b.HasKey("OrderId", "ShoeId");
 
                     b.HasIndex("ShoeId");
@@ -396,7 +399,7 @@ namespace FootTrap.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "ul. Al. Batenberg 15",
                             City = "Kazanlak",
-                            ConcurrencyStamp = "74bd5953-ca3d-4d41-8235-4af8057fa21c",
+                            ConcurrencyStamp = "f6cecf90-54a0-4cd6-bb86-8fc76b35f7a4",
                             Country = "Bulgaria",
                             Email = "georgiivanov@abv.bg",
                             EmailConfirmed = false,
@@ -406,10 +409,10 @@ namespace FootTrap.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "GEORGIIVANOV@ABV.BG",
                             NormalizedUserName = "GOSHO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEI6V/eQLFuAn/S+ZkIz5HyeAKcCw3SDQcBpqz2qAWOILp43M/dPfBpSjBlncJ/jbdw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKLFnm8SYzrtg3Zr33gxYtO6GH6vXGUHdGSE+767Mn9qm8m2ubS57BFYYTPLiXTgNw==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://res.cloudinary.com/dwocfg6qw/image/upload/v1703607793/FootTrapProject/5685_jb2zs0.jpg",
-                            SecurityStamp = "456c618d-0f4f-4321-88d8-5800cd4b236b",
+                            SecurityStamp = "d9bdf652-d26b-4b7a-9166-3fae6a639b2f",
                             TwoFactorEnabled = false,
                             UserName = "gosho"
                         },
@@ -419,7 +422,7 @@ namespace FootTrap.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "ul. Stefan Stambolov 20",
                             City = "Kazanlak",
-                            ConcurrencyStamp = "0dfc643d-155a-45b1-a551-22e656298907",
+                            ConcurrencyStamp = "945d8178-b381-4b7e-ae70-b373510c1ac7",
                             Country = "Bulgaria",
                             Email = "borisivanov@abv.bg",
                             EmailConfirmed = false,
@@ -429,10 +432,10 @@ namespace FootTrap.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BORISIVANOV@ABV.BG",
                             NormalizedUserName = "BORKATA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH/ng+ZcY9oHMLzyrxEDEgtJHSS0XtpwgFdHSfd3PU2z6DE7kunixBpOjoupYdJhMA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN2Nwn2luML4M2b0ZZyTrwsBGsKIZ/cFyp0ma3LrpGpWPPeTlzs6J2cD7+TjCcIfWQ==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://res.cloudinary.com/dwocfg6qw/image/upload/v1703607775/FootTrapProject/2150771123_oytfrj.jpg",
-                            SecurityStamp = "c352de4e-fec3-4db0-bcb2-5aab18c61cb6",
+                            SecurityStamp = "aece7d2f-24c2-423d-a470-a19ff5f3b048",
                             TwoFactorEnabled = false,
                             UserName = "borkata"
                         });
@@ -468,14 +471,14 @@ namespace FootTrap.Data.Migrations
                         new
                         {
                             Id = "2d5a35b7-23c2-4d95-b772-4b91609e65e7",
-                            ConcurrencyStamp = "cd5a1fc9-3c06-420c-96d3-09e86958f4ec",
+                            ConcurrencyStamp = "914c9346-4a95-4cd7-a16b-0f5a82f7b348",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "599457c1-5737-4071-acbe-9f2cc064e41d",
-                            ConcurrencyStamp = "aa583389-9d41-476b-9eb4-74e7234ccc09",
+                            ConcurrencyStamp = "4ec98a1a-b777-49b1-b766-dffa08c7f98f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FootTrap.Data.Migrations
 {
     [DbContext(typeof(FootTrapDbContext))]
-    [Migration("20240129093634_ChangedDb")]
-    partial class ChangedDb
+    [Migration("20240304190653_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -113,16 +113,11 @@ namespace FootTrap.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("PaymentId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -134,6 +129,9 @@ namespace FootTrap.Data.Migrations
 
                     b.Property<string>("ShoeId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ShoeSize")
+                        .HasColumnType("int");
 
                     b.HasKey("OrderId", "ShoeId");
 
@@ -169,19 +167,14 @@ namespace FootTrap.Data.Migrations
 
                     b.Property<string>("SecurityCode")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Payments");
                 });
@@ -303,7 +296,7 @@ namespace FootTrap.Data.Migrations
 
                     b.HasIndex("ShoeId");
 
-                    b.ToTable("SizeShoe");
+                    b.ToTable("SizeShoes");
                 });
 
             modelBuilder.Entity("FootTrap.Data.Models.User", b =>
@@ -408,7 +401,7 @@ namespace FootTrap.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "ul. Al. Batenberg 15",
                             City = "Kazanlak",
-                            ConcurrencyStamp = "72e86b3d-2167-4369-bfe5-1fe2763c0741",
+                            ConcurrencyStamp = "f6cecf90-54a0-4cd6-bb86-8fc76b35f7a4",
                             Country = "Bulgaria",
                             Email = "georgiivanov@abv.bg",
                             EmailConfirmed = false,
@@ -416,12 +409,12 @@ namespace FootTrap.Data.Migrations
                             IsActive = true,
                             LastName = "Ivanov",
                             LockoutEnabled = false,
-                            NormalizedEmail = "GEORGIIVAONV@ABV.BG",
+                            NormalizedEmail = "GEORGIIVANOV@ABV.BG",
                             NormalizedUserName = "GOSHO",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHAeHuFali74M1i2OH/WHq9mOsDWNucITn90QeTKN9LSxYJdro8iOmj4LMyk8avFCg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKLFnm8SYzrtg3Zr33gxYtO6GH6vXGUHdGSE+767Mn9qm8m2ubS57BFYYTPLiXTgNw==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://res.cloudinary.com/dwocfg6qw/image/upload/v1703607793/FootTrapProject/5685_jb2zs0.jpg",
-                            SecurityStamp = "bb459876-d80b-4ec5-bb33-cf7d7ef56d4e",
+                            SecurityStamp = "d9bdf652-d26b-4b7a-9166-3fae6a639b2f",
                             TwoFactorEnabled = false,
                             UserName = "gosho"
                         },
@@ -431,7 +424,7 @@ namespace FootTrap.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "ul. Stefan Stambolov 20",
                             City = "Kazanlak",
-                            ConcurrencyStamp = "1b484613-9839-41d3-a532-3893ca7f2773",
+                            ConcurrencyStamp = "945d8178-b381-4b7e-ae70-b373510c1ac7",
                             Country = "Bulgaria",
                             Email = "borisivanov@abv.bg",
                             EmailConfirmed = false,
@@ -441,10 +434,10 @@ namespace FootTrap.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "BORISIVANOV@ABV.BG",
                             NormalizedUserName = "BORKATA",
-                            PasswordHash = "AQAAAAEAACcQAAAAELokVEWlmJDZKYakZuzKbYylyo9SaH/DTcOP3V43pUL4pa7dyw4xqO1Ru3ZAzgkMfg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEN2Nwn2luML4M2b0ZZyTrwsBGsKIZ/cFyp0ma3LrpGpWPPeTlzs6J2cD7+TjCcIfWQ==",
                             PhoneNumberConfirmed = false,
                             ProfilePictureUrl = "https://res.cloudinary.com/dwocfg6qw/image/upload/v1703607775/FootTrapProject/2150771123_oytfrj.jpg",
-                            SecurityStamp = "9493c400-ceda-4469-aa20-e907f4c4b84f",
+                            SecurityStamp = "aece7d2f-24c2-423d-a470-a19ff5f3b048",
                             TwoFactorEnabled = false,
                             UserName = "borkata"
                         });
@@ -480,14 +473,14 @@ namespace FootTrap.Data.Migrations
                         new
                         {
                             Id = "2d5a35b7-23c2-4d95-b772-4b91609e65e7",
-                            ConcurrencyStamp = "13404c4c-d0e3-47e3-9cb8-342f26633736",
+                            ConcurrencyStamp = "914c9346-4a95-4cd7-a16b-0f5a82f7b348",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
                             Id = "599457c1-5737-4071-acbe-9f2cc064e41d",
-                            ConcurrencyStamp = "10abd63c-7e9a-43a7-a438-58912458f252",
+                            ConcurrencyStamp = "4ec98a1a-b777-49b1-b766-dffa08c7f98f",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -638,10 +631,6 @@ namespace FootTrap.Data.Migrations
                         .WithMany()
                         .HasForeignKey("PaymentId");
 
-                    b.HasOne("FootTrap.Data.Models.User", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("Customer");
 
                     b.Navigation("Payment");
@@ -677,10 +666,6 @@ namespace FootTrap.Data.Migrations
                     b.HasOne("FootTrap.Data.Models.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId");
-
-                    b.HasOne("FootTrap.Data.Models.User", null)
-                        .WithMany("Payments")
-                        .HasForeignKey("UserId");
 
                     b.Navigation("Customer");
 
@@ -790,13 +775,6 @@ namespace FootTrap.Data.Migrations
             modelBuilder.Entity("FootTrap.Data.Models.Size", b =>
                 {
                     b.Navigation("SizeShoe");
-                });
-
-            modelBuilder.Entity("FootTrap.Data.Models.User", b =>
-                {
-                    b.Navigation("Orders");
-
-                    b.Navigation("Payments");
                 });
 #pragma warning restore 612, 618
         }

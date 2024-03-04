@@ -40,6 +40,7 @@ namespace FootTrap.Services.Services
                 {
                     OrderId = order.Id,
                     ShoeId = shoe.Id,
+                    ShoeSize = (int)shoe.Size!,
                 };
 
                 orderShoes.Add(sho);

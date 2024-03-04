@@ -1,9 +1,9 @@
-﻿.product__category, .product__price, .btn {
+﻿/*.product__category, .product__price, .btn {
     font-size: 0.8em;
     text-transform: uppercase;
     letter-spacing: 1.4px;
     font-weight: 700;
-}
+}*/
 
 img {
     max-width: 100%;

@@ -18,5 +18,7 @@ namespace FootTrap.Data.Models
         public string ShoeId { get; set; } = null!;
 
         public Shoe Shoe { get; set; } = null!;
+
+        public int ShoeSize { get; set; }
     }
 }
