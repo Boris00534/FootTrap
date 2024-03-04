@@ -13,8 +13,6 @@ namespace FootTrap.Data.Models
         public User()
         {
             this.IsActive = true;
-            this.Orders = new HashSet<Order>();
-            this.Payments = new HashSet<Payment>();
         }
 
         [MaxLength(30)]
@@ -37,8 +35,6 @@ namespace FootTrap.Data.Models
 
         public bool IsActive { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
 
-        public ICollection<Payment> Payments { get; set; }
     }
 }

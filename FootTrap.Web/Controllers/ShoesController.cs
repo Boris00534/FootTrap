@@ -170,10 +170,10 @@ namespace FootTrap.Web.Controllers
 
             var shoes = HttpContext.Session.GetObjectFromJson<List<OrderShoeViewModel>>($"cart{User.GetUsername()}");
 
-            if(shoes.Count > 0)
+            if(shoes!.Count > 0)
             {
                 var shoeToRemove = shoes.FirstOrDefault(d => d.Id == shoeId);
-                if (shoes.Remove(shoeToRemove))
+                if (shoes.Remove(shoeToRemove!))
                 {
                     HttpContext.Session.SetObjectAsJson($"cart{User.GetUsername()}", shoes);
                 }

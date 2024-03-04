@@ -15,7 +15,7 @@ namespace FootTrap.Services.ViewModels.Order
             this.Shoes = new List<OrderShoeViewModel>();
         }
         [Required]
-        [StringLength(100, MinimumLength = 10)]
+        [StringLength(100, MinimumLength = 5)]
         public string Address { get; set; } = null!;
 
         [Required]
@@ -23,5 +23,7 @@ namespace FootTrap.Services.ViewModels.Order
         public string City { get; set; } = null!;
 
         public ICollection<OrderShoeViewModel> Shoes { get; set; }
+
+        public string PaymentId { get; set; }
     }
 }

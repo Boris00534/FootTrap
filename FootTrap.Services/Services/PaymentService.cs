@@ -2,6 +2,7 @@
 using FootTrap.Data.Models;
 using FootTrap.Services.Contracts;
 using FootTrap.Services.ViewModels.Payment;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -17,6 +18,18 @@ namespace FootTrap.Services.Services
         public PaymentService(FootTrapDbContext context)
         {
             this.context = context;
+        }
+
+        public async Task AddOrderToPaymentAsync(string paymentId, string orderId)
+        {
+            var payment = await context.Payments
+                .FirstOrDefaultAsync(p => p.Id == paymentId);
+
+            payment!.OrderId = orderId;
+
+            await context.SaveChangesAsync();
+
+            
         }
 
         public async Task<string> CreatPaymentAsync(PaymentFormModel model, string customerId)

@@ -10,5 +10,7 @@ namespace FootTrap.Services.Contracts
     public interface IPaymentService
     {
         Task<string> CreatPaymentAsync(PaymentFormModel model, string customerId);
+
+        Task AddOrderToPaymentAsync(string paymentId, string orderId);
     }
 }

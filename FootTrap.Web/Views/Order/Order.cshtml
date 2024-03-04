@@ -21,16 +21,18 @@
         }
     </div>
 
-    <div class="form-group">
+    <div class="form-group" style="margin-left: 3rem;width: 90%">
         <label asp-for="Address">Address: </label>
         <input asp-for="Address" type="text" id="address" required />
     </div>
-    <div class="form-group">
+    <div class="form-group" style="margin-left: 3rem;width: 90%">
         <label asp-for="City">City: </label>
         <input asp-for="City" type="text" id="city" required />
     </div>
 
-    <div class="form-group">
+    <input asp-for="PaymentId" type="hidden" value="@Model.PaymentId" />
+
+    <div class="form-group" style="margin-left: 3rem;">
         <input type="submit" value="Place Order" />
     </div>
 

@@ -62,7 +62,9 @@ namespace FootTrap.Web.Controllers
 
             string paymentId = await paymentService.CreatPaymentAsync(model, customerId!);
 
-            return RedirectToAction("Order", "Order");
+
+
+            return RedirectToAction("Order", "Order", new {paymentId});
         }
     }
 }
