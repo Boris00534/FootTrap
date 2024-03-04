@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace FootTrap.Services.ViewModels.Order
 {
-    public class OrderViewModel
+    public class OrderFormModel
     {
-        public OrderViewModel()
+        public OrderFormModel()
         {
             this.Shoes = new List<OrderShoeViewModel>();
         }

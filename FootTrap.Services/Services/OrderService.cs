@@ -19,7 +19,7 @@ namespace FootTrap.Services.Services
             this.context = context;
         }
 
-        public async Task<string> CreateOrderAsync(OrderViewModel model, string customerId)
+        public async Task<string> CreateOrderAsync(OrderFormModel model, string customerId)
         {
             var order = new Order()
             {

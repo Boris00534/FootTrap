@@ -40,7 +40,7 @@ namespace FootTrap.Web.Controllers
             string? userName = User.GetUsername();
             var cartShoes = shoeService.GetCartShoes(userName!);
 
-            OrderViewModel model = new OrderViewModel()
+            OrderFormModel model = new OrderFormModel()
             {
                 PaymentId = paymentId,
                 Shoes = cartShoes!
@@ -50,7 +50,7 @@ namespace FootTrap.Web.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task<IActionResult> Order(OrderViewModel model)
+        public async Task<IActionResult> Order(OrderFormModel model)
         {
             string userName = User.GetUsername()!;
 
