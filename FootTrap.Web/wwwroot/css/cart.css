@@ -53,12 +53,6 @@
     zoom: 1;
 }
 
-    /* Apply clearfix in a few places */
-    /* Apply dollar signs */
-    .product .product-price:before, .product .product-line-price:before, .totals-value:before {
-        content: '$';
-    }
-
 
 h1 {
     font-weight: 100;

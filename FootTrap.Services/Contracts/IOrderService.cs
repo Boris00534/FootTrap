@@ -11,6 +11,9 @@ namespace FootTrap.Services.Contracts
     public interface IOrderService
     {
         Task<string> CreateOrderAsync(OrderFormModel model, string cutomerId);
-        
+
+        Task<List<OrderViewModel>> GetCustomerOrdersAsync(string cutomerId);
+        Task<List<OrderViewModel>> GetAllOrdersAsync();
+
     }
 }

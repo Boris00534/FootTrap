@@ -2,44 +2,8 @@
 @model FootTrap.Services.ViewModels.Shoes.ShoeViewModel
 
 
-
-@* <div class="col-lg-4 col-md-6" style="margin-left: 50px;margin-top: 50px">
-    <div class="product-card link-effect pe-3 pb-3">
-        <figure class="zoom-effect">
-            <a class="zoom-in" asp-action="Details" asp-controller="Shoes" asp-route-id="@Model.Id">
-                <img src="@Model.ShoePictureUrl" alt="stories" width="300" height="200" class="lgpostImg img-fluid" style="max-width: 80%;">
-            </a>
-        </figure>
-        <div class="story-title-wrap my-3 d-flex justify-content-between" style="max-width: 80%;">
-            <h3 class="story-title" style="height: fit-content;"><a asp-action="Details" asp-controller="Shoes" asp-route-id="@Model.Id">@Model.Name</a></h3>
-            <a asp-action="Details" asp-controller="Shoes" asp-route-id="@Model.Id" class="price" data-after="ADD TO CART">
-                <span>$ @Model.Price</span>
-            </a>
-
-        </div>
-
-        <div class="d-flex">
-            @if (User.IsInRole("Admin"))
-            {
-                <div class="btn_box">
-                    <a asp-action="Edit" asp-controller="Shoes" asp-route-shoeId="@Model.Id" class="view_more-link">
-                        Edit
-                    </a>
-                </div>
-                <div class="btn_box-delete" style="margin-left: 20px;">
-                    <a href="" class="view_more-link">
-                        Delete
-                    </a>
-                </div>
-            }
-        </div>
-
-
-    </div>
-</div> *@
-
 <div class="product" style="margin-left: 3rem; margin-top: 5rem">
-    <span class="product__price">$@Model.Price</span>
+    <span class="product__price">@Model.Price лв.</span>
     <img class="product__image" height="300" src="@Model.ShoePictureUrl" style="height:auto">
     <h1 class="product__title">@Model.Name</h1>
     <hr />

@@ -3,6 +3,7 @@ using FootTrap.Data.Models;
 using FootTrap.Data.Models.Enums;
 using FootTrap.Services.Contracts;
 using FootTrap.Services.ViewModels.Order;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,57 @@ namespace FootTrap.Services.Services
             return order.Id;
 
 
+        }
+
+        public async Task<List<OrderViewModel>> GetAllOrdersAsync()
+        {
+            var orders = await context.Orders
+                .Select(o => new OrderViewModel()
+                {
+                    Id = o.Id,
+                    DeliveryAddress = o.DeliveryAddress,
+                    DeliveryTime = o.DeliveryTime.HasValue
+                        ? $"{o.DeliveryTime.Value.ToShortTimeString()} {o.DeliveryTime.Value.ToShortDateString()}"
+                        : string.Empty,
+                    OrderTime = $"{o.OrderTime.ToShortTimeString()} {o.OrderTime.ToShortDateString()}",
+                    Status = o.Status,
+                    Shoes = o.OrderShoe.Select(d => new OrderedShoeInfo()
+                    {
+                        Name = d.Shoe.Name,
+                        Size = d.ShoeSize
+                    }).ToList(),
+                    Price = o.Price,
+
+                })
+                .ToListAsync();
+
+            return orders;
+        }
+
+        public async Task<List<OrderViewModel>> GetCustomerOrdersAsync(string cutomerId)
+        {
+            var orders = await context.Orders
+                .Where(o => o.CustomerId == cutomerId)
+                .Select(o => new OrderViewModel()
+                {
+                    Id = o.Id,
+                    DeliveryAddress = o.DeliveryAddress,
+                    DeliveryTime = o.DeliveryTime.HasValue
+                        ? $"{o.DeliveryTime.Value.ToShortTimeString()} {o.DeliveryTime.Value.ToShortDateString()}"
+                        : string.Empty,
+                    OrderTime = $"{o.OrderTime.ToShortTimeString()} {o.OrderTime.ToShortDateString()}",
+                    Status = o.Status,
+                    Shoes = o.OrderShoe.Select(d => new OrderedShoeInfo()
+                    {
+                        Name = d.Shoe.Name,
+                        Size = d.ShoeSize
+                    }).ToList(),
+                    Price = o.Price,
+
+                })
+                .ToListAsync();
+
+            return orders;
         }
     }
 }

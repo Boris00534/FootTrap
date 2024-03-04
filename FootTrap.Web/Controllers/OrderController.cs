@@ -78,7 +78,49 @@ namespace FootTrap.Web.Controllers
             }
 
             HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("UserOrders");
+
+        }
+
+        public async Task<IActionResult> UserOrders()
+        {
+            if (!User.IsInRole("Customer"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            string? customerId = await customerService.GetCustomerIdByUserIdAsync(User.GetId()!);
+
+            try
+            {
+                var orders = await orderService.GetCustomerOrdersAsync(customerId!);
+                return View("All", orders);
+
+            }
+            catch(Exception)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+        }
+        public async Task<IActionResult> AdminOrders()
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                var orders = await orderService.GetAllOrdersAsync();
+                
+                return View("All", orders);
+
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
         }
     }
