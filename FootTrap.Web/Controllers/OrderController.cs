@@ -202,5 +202,63 @@ namespace FootTrap.Web.Controllers
             return View(order);
 
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string orderId, AcceptOrderFormModel model)
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return RedirectToAction("UserOrders");
+            }
+
+            bool isOrderExists = await orderService.IsOrderExistsAsync(orderId);
+            if (!isOrderExists)
+            {
+                return RedirectToAction("AdminOrders");
+            }
+
+            await orderService.EditDeliveryTimeForOrderAsync(model);
+
+            return RedirectToAction("AdminOrders");
+
+
+        }
+
+        public async Task<IActionResult> Send(string orderId)
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return RedirectToAction("UserOrders");
+            }
+
+            bool isOrderExists = await orderService.IsOrderExistsAsync(orderId);
+            if (!isOrderExists)
+            {
+                return RedirectToAction("AdminOrders");
+            }
+
+            await orderService.ChangeStatusOrderAsync(orderId, OrderStatusEnum.Send.ToString());
+
+            return RedirectToAction("AdminOrders");
+        }
+
+        public async Task<IActionResult> DeliverOrder(string orderId)
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return RedirectToAction("UserOrders");
+            }
+
+            bool isOrderExists = await orderService.IsOrderExistsAsync(orderId);
+            if (!isOrderExists)
+            {
+                return RedirectToAction("AdminOrders");
+            }
+
+            await orderService.ChangeStatusOrderAsync(orderId, OrderStatusEnum.Delivered.ToString());
+
+            return RedirectToAction("AdminOrders");
+        }
+
     }
 }

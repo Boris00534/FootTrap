@@ -24,5 +24,7 @@ namespace FootTrap.Services.Contracts
         Task<AcceptOrderFormModel> GetOrderByIdAsync(string orderId);
         Task<AcceptOrderFormModel> GetOrderForEditByIdAsync(string orderId);
 
+        Task EditDeliveryTimeForOrderAsync(AcceptOrderFormModel model);
+
     }
 }

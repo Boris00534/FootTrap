@@ -84,6 +84,21 @@ namespace FootTrap.Services.Services
 
         }
 
+        public async Task EditDeliveryTimeForOrderAsync(AcceptOrderFormModel model)
+        {
+            var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == model.Id);
+
+            if(order == null)
+            {
+                return;
+            }
+
+            order.DeliveryTime = model.DeliveryTime;
+
+            await context.SaveChangesAsync();
+
+        }
+
         public async Task<List<OrderViewModel>> GetAllOrdersAsync()
         {
             var orders = await context.Orders
@@ -95,9 +110,9 @@ namespace FootTrap.Services.Services
                     Id = o.Id,
                     DeliveryAddress = o.DeliveryAddress,
                     DeliveryTime = o.DeliveryTime.HasValue
-                        ? $"{o.DeliveryTime.Value.ToShortTimeString()} {o.DeliveryTime.Value.ToShortDateString()}"
+                        ? $"{o.DeliveryTime.Value.ToString("dddd, dd MMMM yyyy")}"
                         : string.Empty,
-                    OrderTime = $"{o.OrderTime.ToShortTimeString()} {o.OrderTime.ToShortDateString()}",
+                    OrderTime = $"{o.OrderTime.ToString("dddd, dd MMMM yyyy")}",
                     Status = o.Status,
                     CustomerPhoneNumber = o.Customer.User.PhoneNumber,
                     Shoes = o.OrderShoe.Select(d => new OrderedShoeInfo()
@@ -124,9 +139,9 @@ namespace FootTrap.Services.Services
                     Id = o.Id,
                     DeliveryAddress = o.DeliveryAddress,
                     DeliveryTime = o.DeliveryTime.HasValue
-                        ? $"{o.DeliveryTime.Value.ToString("dddd, dd MMMM yyyy")} {o.DeliveryTime.Value.ToString("dddd, dd MMMM yyyy")}"
+                        ?  o.DeliveryTime.Value.ToString("dddd, dd MMMM yyyy")
                         : string.Empty,
-                    OrderTime = $"{o.OrderTime.ToString("dddd, dd MMMM yyyy")} {o.OrderTime.ToString("dddd, dd MMMM yyyy")}",
+                    OrderTime = o.OrderTime.ToString("dddd, dd MMMM yyyy"),
                     Status = o.Status,
                     CustomerPhoneNumber = o.Customer.User.PhoneNumber,
                     Shoes = o.OrderShoe.Select(d => new OrderedShoeInfo()
