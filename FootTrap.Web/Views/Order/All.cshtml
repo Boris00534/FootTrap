@@ -47,7 +47,10 @@
                             }
                             else if (order.Status == OrderStatusEnum.Confirmed.ToString())
                             {
-                                <a class="btn btn-info" asp-action="SendOrder" asp-controller="Order" asp-route-orderId="@order.Id">Send</a>
+                                <div class="d-flex justify-content-between">
+                                    <a class="btn btn-info" asp-action="Send" asp-controller="Order" asp-route-orderId="@order.Id">Send</a>
+                                    <a class="btn btn-warning" asp-action="Edit" asp-controller="Order" asp-route-orderId="@order.Id">Edit</a>
+                                </div>
                             }
                             else
                             {
@@ -71,6 +74,6 @@ else
     <h2 class="text-black text-center">You don't have any orders yet!</h2>
 }
 
-@section Styles{
+@section Styles {
     <link rel="stylesheet" href="~/css/shoes.css" asp-append-version="true" />
 }

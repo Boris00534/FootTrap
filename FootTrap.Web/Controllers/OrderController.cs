@@ -1,4 +1,5 @@
-﻿using FootTrap.Services.Contracts;
+﻿using FootTrap.Data.Models.Enums;
+using FootTrap.Services.Contracts;
 using FootTrap.Services.Services;
 using FootTrap.Services.ViewModels.Order;
 using FootTrap.Web.Extensions;
@@ -125,6 +126,7 @@ namespace FootTrap.Web.Controllers
 
         }
 
+        [HttpGet]
         public async Task<IActionResult> Accept(string orderId)
         {
             if (!User.IsInRole("Admin"))
@@ -141,6 +143,44 @@ namespace FootTrap.Web.Controllers
             var order = await orderService.GetOrderByIdAsync(orderId);
 
             return View(order);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Accept(AcceptOrderFormModel model)
+        {
+            string orderId = model.Id;
+
+            if (!User.IsInRole("Admin"))
+            {
+                return RedirectToAction("UserOrders");
+            }
+
+            bool isOrderExists = await orderService.IsOrderExistsAsync(orderId);
+            if (!isOrderExists)
+            {
+                return RedirectToAction("AdminOrders");
+            }
+
+            if (model.DeliveryTime.Date < DateTime.Parse(model.OrderTime).Date)
+            {
+                ModelState.AddModelError(nameof(model.DeliveryTime), "Delivery date should be after order date");
+            }
+            if (model.DeliveryTime < DateTime.Parse(model.OrderTime))
+            {
+                ModelState.AddModelError(nameof(model.DeliveryTime), "Delivery time should be after order time");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await orderService.AddDeliveryTimeForOrderAsync(model);
+            await orderService.ChangeStatusOrderAsync(orderId, OrderStatusEnum.Confirmed.ToString());
+
+            return RedirectToAction("AdminOrders");
+
+
         }
     }
 }

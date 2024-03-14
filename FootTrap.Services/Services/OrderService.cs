@@ -20,7 +20,19 @@ namespace FootTrap.Services.Services
             this.context = context;
         }
 
-        public async Task AcceptOrderAsync(string orderId)
+        public async Task AddDeliveryTimeForOrderAsync(AcceptOrderFormModel model)
+        {
+            var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == model.Id);
+            if (order == null)
+            {
+                return;
+            }
+
+            order.DeliveryTime = model.DeliveryTime;
+            await context.SaveChangesAsync();
+        }
+
+        public async Task ChangeStatusOrderAsync(string orderId, string status)
         {
             var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
 
@@ -29,7 +41,7 @@ namespace FootTrap.Services.Services
                 return;
             }
 
-            order.Status = OrderStatusEnum.Confirmed.ToString();
+            order.Status = status;
 
             await context.SaveChangesAsync();
         }
@@ -75,6 +87,9 @@ namespace FootTrap.Services.Services
         public async Task<List<OrderViewModel>> GetAllOrdersAsync()
         {
             var orders = await context.Orders
+                .Include(o => o.OrderShoe)
+                .Include(o => o.Customer)
+                .Include(o => o.Customer.User)
                 .Select(o => new OrderViewModel()
                 {
                     Id = o.Id,
@@ -84,6 +99,7 @@ namespace FootTrap.Services.Services
                         : string.Empty,
                     OrderTime = $"{o.OrderTime.ToShortTimeString()} {o.OrderTime.ToShortDateString()}",
                     Status = o.Status,
+                    CustomerPhoneNumber = o.Customer.User.PhoneNumber,
                     Shoes = o.OrderShoe.Select(d => new OrderedShoeInfo()
                     {
                         Name = d.Shoe.Name,
@@ -101,15 +117,18 @@ namespace FootTrap.Services.Services
         {
             var orders = await context.Orders
                 .Where(o => o.CustomerId == cutomerId)
+                .Include(o => o.OrderShoe)
+                .Include(o => o.Customer.User)
                 .Select(o => new OrderViewModel()
                 {
                     Id = o.Id,
                     DeliveryAddress = o.DeliveryAddress,
                     DeliveryTime = o.DeliveryTime.HasValue
-                        ? $"{o.DeliveryTime.Value.ToShortTimeString()} {o.DeliveryTime.Value.ToShortDateString()}"
+                        ? $"{o.DeliveryTime.Value.ToString("dddd, dd MMMM yyyy")} {o.DeliveryTime.Value.ToString("dddd, dd MMMM yyyy")}"
                         : string.Empty,
-                    OrderTime = $"{o.OrderTime.ToShortTimeString()} {o.OrderTime.ToShortDateString()}",
+                    OrderTime = $"{o.OrderTime.ToString("dddd, dd MMMM yyyy")} {o.OrderTime.ToString("dddd, dd MMMM yyyy")}",
                     Status = o.Status,
+                    CustomerPhoneNumber = o.Customer.User.PhoneNumber,
                     Shoes = o.OrderShoe.Select(d => new OrderedShoeInfo()
                     {
                         Name = d.Shoe.Name,
@@ -135,6 +154,7 @@ namespace FootTrap.Services.Services
                     CustomerName = $"{o.Customer.User.FirstName} {o.Customer.User.LastName}", 
                     OrderTime = o.OrderTime.ToString("dddd, dd MMMM yyyy"),
                     Status = o.Status,
+                    DeliveryAddress = o.DeliveryAddress,
                     Shoes = o.OrderShoe.Select(s => new OrderedShoeInfo()
                     {
                         Name = s.Shoe.Name, 

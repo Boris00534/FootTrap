@@ -17,7 +17,9 @@ namespace FootTrap.Services.Contracts
 
         Task<bool> IsOrderExistsAsync(string orderId);
 
-        Task AcceptOrderAsync(string orderId);
+        Task ChangeStatusOrderAsync(string orderId, string status);
+
+        Task AddDeliveryTimeForOrderAsync(AcceptOrderFormModel model);
 
         Task<AcceptOrderFormModel> GetOrderByIdAsync(string orderId);
 
