@@ -15,5 +15,11 @@ namespace FootTrap.Services.Contracts
         Task<List<OrderViewModel>> GetCustomerOrdersAsync(string cutomerId);
         Task<List<OrderViewModel>> GetAllOrdersAsync();
 
+        Task<bool> IsOrderExistsAsync(string orderId);
+
+        Task AcceptOrderAsync(string orderId);
+
+        Task<AcceptOrderFormModel> GetOrderByIdAsync(string orderId);
+
     }
 }

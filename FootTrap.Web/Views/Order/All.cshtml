@@ -4,18 +4,18 @@
 
 
 
-<h2 class="text-center text-black"> My Orders </h2>
+<h2 class="text-center text-black mt-2"> My Orders </h2>
 
 @if (Model.Count > 0)
 {
-    <div class="row" style="margin-left: 20px">
+    <div class="row" style="margin-left: 20px; margin-bottom: 100px;">
 
         @foreach (var order in Model)
         {
             <div class="col-md-4">
                 <div class="card dish-card">
                     <div class="card-body">
-                        <p class="card-text text-black">@order.DeliveryAddress</p>
+                        <p class="card-text text-black">Address: @order.DeliveryAddress</p>
                         <p class="card-ingredients text-black">OrderTime: @order.OrderTime</p>
                         @if (order.DeliveryTime != "" && order.DeliveryTime != string.Empty)
                         {
@@ -27,12 +27,12 @@
                         }
                         <p class="card-text text-yellow">Status: @order.Status</p>
                         <ul class="list-group">
-                            @foreach (var dish in order.Shoes)
+                            @foreach (var shoe in order.Shoes)
                             {
 
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    @dish.Name
-                                    <span class="badge badge-info rounded-pill text-black"> Size: @dish.Size</span>
+                                    @shoe.Name
+                                    <span class="badge badge-info rounded-pill text-black"> Size: @shoe.Size</span>
                                 </li>
 
                             }
@@ -43,7 +43,7 @@
                         {
                             if (order.Status == OrderStatusEnum.Waiting.ToString())
                             {
-                                <a class="btn btn-success" asp-action="Accept" asp-controller="Order" asp-route-orderId="@order.Id">Accept</a>
+                                <a class="btn btn-success" asp-action="Accept" asp-controller="Order" asp-route-orderId="@order.Id">Confirm</a>
                             }
                             else if (order.Status == OrderStatusEnum.Confirmed.ToString())
                             {

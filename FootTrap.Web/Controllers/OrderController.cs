@@ -112,6 +112,7 @@ namespace FootTrap.Web.Controllers
 
             try
             {
+
                 var orders = await orderService.GetAllOrdersAsync();
                 
                 return View("All", orders);
@@ -122,6 +123,24 @@ namespace FootTrap.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+        }
+
+        public async Task<IActionResult> Accept(string orderId)
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return RedirectToAction("UserOrders");
+            }
+
+            bool isOrderExists = await orderService.IsOrderExistsAsync(orderId);
+            if (!isOrderExists)
+            {
+                return RedirectToAction("AdminOrders");
+            }
+
+            var order = await orderService.GetOrderByIdAsync(orderId);
+
+            return View(order);
         }
     }
 }

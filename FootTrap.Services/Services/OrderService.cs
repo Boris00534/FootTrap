@@ -20,6 +20,20 @@ namespace FootTrap.Services.Services
             this.context = context;
         }
 
+        public async Task AcceptOrderAsync(string orderId)
+        {
+            var order = await context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+
+            if (order == null)
+            {
+                return;
+            }
+
+            order.Status = OrderStatusEnum.Confirmed.ToString();
+
+            await context.SaveChangesAsync();
+        }
+
         public async Task<string> CreateOrderAsync(OrderFormModel model, string customerId)
         {
             var order = new Order()
@@ -107,6 +121,41 @@ namespace FootTrap.Services.Services
                 .ToListAsync();
 
             return orders;
+        }
+
+        public async Task<AcceptOrderFormModel> GetOrderByIdAsync(string orderId)
+        {
+            var order = await context.Orders
+                .Where(o => o.Id == orderId)
+                .Include(o => o.OrderShoe)
+                .Include(o => o.Customer.User)
+                .Select(o => new AcceptOrderFormModel()
+                {
+                    Id = o.Id, 
+                    CustomerName = $"{o.Customer.User.FirstName} {o.Customer.User.LastName}", 
+                    OrderTime = o.OrderTime.ToString("dddd, dd MMMM yyyy"),
+                    Status = o.Status,
+                    Shoes = o.OrderShoe.Select(s => new OrderedShoeInfo()
+                    {
+                        Name = s.Shoe.Name, 
+                        Size = s.ShoeSize
+                    })
+                    .ToList(), 
+                    Price = o.Price,
+
+                })
+                .FirstOrDefaultAsync();
+
+
+            return order!;
+        }
+
+        public async Task<bool> IsOrderExistsAsync(string orderId)
+        {
+            var isExists = await context.Orders
+                .AnyAsync(o => o.Id == orderId);
+
+            return isExists;
         }
     }
 }
