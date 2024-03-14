@@ -182,5 +182,25 @@ namespace FootTrap.Web.Controllers
 
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string orderId)
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                return RedirectToAction("UserOrders");
+            }
+
+            bool isOrderExists = await orderService.IsOrderExistsAsync(orderId);
+            if (!isOrderExists)
+            {
+                return RedirectToAction("AdminOrders");
+            }
+
+            var order = await orderService.GetOrderForEditByIdAsync(orderId);
+
+            return View(order);
+
+        }
     }
 }

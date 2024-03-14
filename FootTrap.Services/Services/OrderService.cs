@@ -170,6 +170,35 @@ namespace FootTrap.Services.Services
             return order!;
         }
 
+        public async Task<AcceptOrderFormModel> GetOrderForEditByIdAsync(string orderId)
+        {
+            var order = await context.Orders
+               .Where(o => o.Id == orderId)
+               .Include(o => o.OrderShoe)
+               .Include(o => o.Customer.User)
+               .Select(o => new AcceptOrderFormModel()
+               {
+                   Id = o.Id,
+                   CustomerName = $"{o.Customer.User.FirstName} {o.Customer.User.LastName}",
+                   OrderTime = o.OrderTime.ToString("dddd, dd MMMM yyyy"),
+                   Status = o.Status,
+                   DeliveryAddress = o.DeliveryAddress,
+                   DeliveryTime = (DateTime)o.DeliveryTime,
+                   Shoes = o.OrderShoe.Select(s => new OrderedShoeInfo()
+                   {
+                       Name = s.Shoe.Name,
+                       Size = s.ShoeSize
+                   })
+                   .ToList(),
+                   Price = o.Price,
+
+               })
+               .FirstOrDefaultAsync();
+
+
+            return order!;
+        }
+
         public async Task<bool> IsOrderExistsAsync(string orderId)
         {
             var isExists = await context.Orders
