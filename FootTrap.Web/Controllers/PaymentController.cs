@@ -2,6 +2,7 @@
 using FootTrap.Services.ViewModels.Payment;
 using FootTrap.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using static FootTrap.Common.NotificationConstants;
 
 namespace FootTrap.Web.Controllers
 {
@@ -62,7 +63,7 @@ namespace FootTrap.Web.Controllers
 
             string paymentId = await paymentService.CreatPaymentAsync(model, customerId!);
 
-
+            TempData[SuccessMessage] = "Successful payment";
 
             return RedirectToAction("Order", "Order", new {paymentId});
         }

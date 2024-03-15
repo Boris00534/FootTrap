@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 using FootTrap.Services.Extensions;
+using static FootTrap.Common.NotificationConstants;
 
 namespace FootTrap.Web.Controllers
 {
@@ -88,6 +89,8 @@ namespace FootTrap.Web.Controllers
 
             await sizeService.AddSizesToShoeAsync(model.SizeIds, shoeId);
 
+            TempData[SuccessMessage] = "Successfuly added shoe";
+
             return RedirectToAction("All");
 
 
@@ -148,6 +151,9 @@ namespace FootTrap.Web.Controllers
 
             string userName = User.GetUsername()!;
             await shoeService.AddShoeToCart(userName, shoeId, model.Size);
+
+            TempData[SuccessMessage] = "Successfully added to cart";
+
             return RedirectToAction("Cart");
 
 
@@ -181,9 +187,14 @@ namespace FootTrap.Web.Controllers
                 {
                     HttpContext.Session.SetObjectAsJson($"cart{User.GetUsername()}", shoes);
 
+                    TempData[SuccessMessage] = "Successfully removed from cart";
+
                     return RedirectToAction("Cart");
                 }
             }
+
+            TempData[SuccessMessage] = "Successfully removed from cart";
+
 
             return RedirectToAction("Cart");
         }
@@ -193,6 +204,7 @@ namespace FootTrap.Web.Controllers
         {
             if (!User.IsInRole("Admin"))
             {
+                TempData[ErrorMessage] = "Your should be admin to edit shoe";
                 return RedirectToAction("All");
             }
 
@@ -200,6 +212,7 @@ namespace FootTrap.Web.Controllers
 
             if (!isExists)
             {
+                TempData[ErrorMessage] = "This shoe does not exist";
                 return RedirectToAction("All");
             }
 
@@ -214,6 +227,11 @@ namespace FootTrap.Web.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(ShoeFormModel model)
+        {
 
         }
     }

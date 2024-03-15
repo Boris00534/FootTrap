@@ -2,6 +2,7 @@
 using FootTrap.Services.ViewModels.Profile;
 using FootTrap.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using static FootTrap.Common.NotificationConstants;
 
 namespace FootTrap.Web.Controllers
 {
@@ -79,6 +80,8 @@ namespace FootTrap.Web.Controllers
             }
 
             await profileService.EditProfileAsync(userId, model);
+
+            TempData[SuccessMessage] = "Successfully edited profile";
 
             return RedirectToAction("MyProfile", new {userId });
         }

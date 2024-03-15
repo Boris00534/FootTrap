@@ -4,6 +4,7 @@ using FootTrap.Services.Services;
 using FootTrap.Services.ViewModels.Order;
 using FootTrap.Web.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using static FootTrap.Common.NotificationConstants;
 
 namespace FootTrap.Web.Controllers
 {
@@ -79,6 +80,7 @@ namespace FootTrap.Web.Controllers
             }
 
             HttpContext.Session.Clear();
+            TempData[SuccessMessage] = "Successful order";
             return RedirectToAction("UserOrders");
 
         }
@@ -177,6 +179,7 @@ namespace FootTrap.Web.Controllers
 
             await orderService.AddDeliveryTimeForOrderAsync(model);
             await orderService.ChangeStatusOrderAsync(orderId, OrderStatusEnum.Confirmed.ToString());
+            TempData[SuccessMessage] = "Order is accepted";
 
             return RedirectToAction("AdminOrders");
 
@@ -218,12 +221,12 @@ namespace FootTrap.Web.Controllers
             }
 
             await orderService.EditDeliveryTimeForOrderAsync(model);
+            TempData[SuccessMessage] = "Successfully edited order";
 
             return RedirectToAction("AdminOrders");
 
 
         }
-
         public async Task<IActionResult> Send(string orderId)
         {
             if (!User.IsInRole("Admin"))
@@ -238,6 +241,7 @@ namespace FootTrap.Web.Controllers
             }
 
             await orderService.ChangeStatusOrderAsync(orderId, OrderStatusEnum.Send.ToString());
+            TempData[SuccessMessage] = "Order is sent";
 
             return RedirectToAction("AdminOrders");
         }
@@ -256,6 +260,7 @@ namespace FootTrap.Web.Controllers
             }
 
             await orderService.ChangeStatusOrderAsync(orderId, OrderStatusEnum.Delivered.ToString());
+            TempData[SuccessMessage] = "The order is already delivered";
 
             return RedirectToAction("AdminOrders");
         }

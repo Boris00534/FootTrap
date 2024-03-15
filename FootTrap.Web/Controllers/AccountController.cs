@@ -4,6 +4,7 @@ using FootTrap.Services.ViewModels.Account;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using static FootTrap.Common.NotificationConstants;
 
 namespace FootTrap.Web.Controllers
 {
@@ -79,6 +80,8 @@ namespace FootTrap.Web.Controllers
 
                 await signInManager.SignInAsync(user, isPersistent: false);
 
+                TempData[SuccessMessage] = "Successful register";
+
                 return RedirectToAction("Index", "Home");
             }
 
@@ -116,6 +119,7 @@ namespace FootTrap.Web.Controllers
 
                     if (result.Succeeded)
                     {
+                        TempData[SuccessMessage] = "Successful login";
                         return RedirectToAction("Index", "Home");
                     }
 
