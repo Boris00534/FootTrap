@@ -12,20 +12,7 @@ window.onload = function () {
 
     let cctype = null;
 
-    //const swapColor = function (basecolor) {
-    //    document.querySelectorAll('.lightcolor')
-    //        .forEach(function (input) {
-    //            input.setAttribute('class', '');
-    //            input.setAttribute('class', 'lightcolor ' + basecolor);
-    //        });
-    //    document.querySelectorAll('.darkcolor')
-    //        .forEach(function (input) {
-    //            input.setAttribute('class', '');
-    //            input.setAttribute('class', 'darkcolor ' + basecolor + 'dark');
-    //        });
-    //};
 
-    
     document.querySelector('.preload').classList.remove('preload');
     document.querySelector('.creditcard').addEventListener('click', function () {
         if (this.classList.contains('flipped')) {
@@ -45,14 +32,14 @@ window.onload = function () {
         }
     });
 
-    cardnumber.addEventListener('input', function () {
-        if (cardnumber.value.length == 0) {
-            document.getElementById('svgnumber').innerHTML = '0123 4567 8910 1112';
-        } else {
-            document.getElementById('svgnumber').innerHTML = this.value;
-        }
+    document.getElementById('cardnumber').addEventListener('input', function (e) {
 
-    })
+        var input = e.target.value.replace(/\D/g, '').substring(0, 16);
+        var formattedInput = input.replace(/(\d{4})(?=\d)/g, '$1 ');
+        document.getElementById('svgnumber').innerHTML = formattedInput;
+        document.getElementById('cardnumber').value = formattedInput;
+
+    });
 
     expirationdate.addEventListener('input', function () {
         if (expirationdate.value.length == 0) {

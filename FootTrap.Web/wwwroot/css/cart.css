@@ -142,10 +142,10 @@ label {
         text-align: right;
     }
 
-.totals .totals-item-total {
+/*.totals .totals-item-total {
     font-family: "HelveticaNeue-Medium", "Helvetica Neue Medium";
 }
-
+*/
 #continue {
     text-decoration: none;
     margin-top: 20px;

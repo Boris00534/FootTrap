@@ -14,7 +14,7 @@ namespace FootTrap.Services.ViewModels.Payment
         public string CardHolderName { get; set; } = null!;
 
         [Required]
-        [StringLength(16, MinimumLength = 16)]
+        [StringLength(24, MinimumLength = 16)]
         public string CardNumber { get; set; } = null!;
 
         [Required]

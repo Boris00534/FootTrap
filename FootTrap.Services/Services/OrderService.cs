@@ -131,7 +131,7 @@ namespace FootTrap.Services.Services
         public async Task<List<OrderViewModel>> GetCustomerOrdersAsync(string cutomerId)
         {
             var orders = await context.Orders
-                .Where(o => o.CustomerId == cutomerId)
+                .Where(o => o.CustomerId == cutomerId && o.Status != OrderStatusEnum.Delivered.ToString())
                 .Include(o => o.OrderShoe)
                 .Include(o => o.Customer.User)
                 .Select(o => new OrderViewModel()
