@@ -203,5 +203,56 @@ namespace FootTrap.Services.Services
 
             return shoe;
         }
+
+        public async Task EditShoeAsync(ShoeFormModel shoe, string shoeId)
+        {
+            var model = await context.Shoes
+                .Include(s => s.SizeShoe)
+                .FirstOrDefaultAsync(sh => sh.Id == shoeId);
+
+            if(model == null)
+            {
+                return;
+            }
+
+            model.Name = shoe.Name;
+            model.Description = shoe.Description;
+            model.Price = Decimal.Parse(shoe.Price);
+
+            if (shoe.ShoeUrlImage != null)
+            {
+                model.ShoeUrlImage = await imageService.UploadImageToShoe(shoe.ShoeUrlImage!, "FootTrapProject", model);
+            }
+
+            if(shoe.CategoryId != null)
+            {
+                model.CategoryId = shoe.CategoryId;
+            }
+
+            List<SizeShoe> sizes = new List<SizeShoe>();
+
+            if(shoe.SizeIds.Count() != 0)
+            {
+                foreach (var size in shoe.SizeIds)
+                {
+                    SizeShoe sz = new SizeShoe()
+                    {
+                        ShoeId = shoeId,
+                        SizeId = size
+                    };
+
+                    sizes.Add(sz);
+                }
+
+                context.SizeShoes.RemoveRange(model.SizeShoe);
+            }
+
+            await context.SizeShoes.AddRangeAsync(sizes);
+
+            await context.SaveChangesAsync();
+
+
+
+        }
     }
 }

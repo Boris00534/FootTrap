@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 using FootTrap.Services.Extensions;
 using static FootTrap.Common.NotificationConstants;
+using FootTrap.Data.Models;
 
 namespace FootTrap.Web.Controllers
 {
@@ -230,8 +231,34 @@ namespace FootTrap.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(ShoeFormModel model)
+        public async Task<IActionResult> Edit(string shoeId, ShoeFormModel model)
         {
+            if (!User.IsInRole("Admin"))
+            {
+                TempData[ErrorMessage] = "Your should be admin to edit shoe";
+                return RedirectToAction("All");
+            }
+
+            bool isExists = await shoeService.IsExistsAsync(shoeId);
+
+            if (!isExists)
+            {
+                TempData[ErrorMessage] = "This shoe does not exist";
+                return RedirectToAction("All");
+            }
+
+            if (!ModelState.IsValid) 
+            {
+                return View(model);
+            }
+
+
+
+            await shoeService.EditShoeAsync(model, shoeId);
+
+            TempData[SuccessMessage] = "Successfully edited shoe";
+
+            return RedirectToAction("All");
 
         }
     }

@@ -24,5 +24,7 @@ namespace FootTrap.Services.Contracts
         Task AddShoeToCart(string username, string shoeId, int size);
 
         Task<ShoeFormModel> GetShoeForEditAsync(string shoeId);
+
+        Task EditShoeAsync(ShoeFormModel shoe, string shoeId);
     }
 }
