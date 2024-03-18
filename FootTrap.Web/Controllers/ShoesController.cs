@@ -261,5 +261,53 @@ namespace FootTrap.Web.Controllers
             return RedirectToAction("All");
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(string shoeId)
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                TempData[ErrorMessage] = "Your should be admin to edit shoe";
+                return RedirectToAction("All");
+            }
+
+            bool isExists = await shoeService.IsExistsAsync(shoeId);
+
+            if (!isExists)
+            {
+                TempData[ErrorMessage] = "This shoe does not exist";
+                return RedirectToAction("All");
+            }
+
+            var shoe = await shoeService.GetShoeForDeleteAsync(shoeId);
+
+            TempData[WarningMessage] = "If you press the button delete you will delete this shoe";
+            return View(shoe);
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string shoeId, PreDeleteShoeViewModel model)
+        {
+            if (!User.IsInRole("Admin"))
+            {
+                TempData[ErrorMessage] = "Your should be admin to edit shoe";
+                return RedirectToAction("All");
+            }
+
+            bool isExists = await shoeService.IsExistsAsync(shoeId);
+
+            if (!isExists)
+            {
+                TempData[ErrorMessage] = "This shoe does not exist";
+                return RedirectToAction("All");
+            }
+
+            await shoeService.DeleteShoeAsync(shoeId);
+
+            TempData[SuccessMessage] = "Successfully delete shoe";
+
+            return RedirectToAction("All");
+        }
     }
 }

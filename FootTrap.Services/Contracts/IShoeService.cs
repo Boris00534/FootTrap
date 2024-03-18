@@ -26,5 +26,9 @@ namespace FootTrap.Services.Contracts
         Task<ShoeFormModel> GetShoeForEditAsync(string shoeId);
 
         Task EditShoeAsync(ShoeFormModel shoe, string shoeId);
+
+        Task<PreDeleteShoeViewModel> GetShoeForDeleteAsync(string shoeId);
+
+        Task DeleteShoeAsync(string shoeId);
     }
 }

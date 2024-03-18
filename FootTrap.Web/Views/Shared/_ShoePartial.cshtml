@@ -19,7 +19,7 @@
     {
         <div class="d-flex" style="justify-content: space-between">
             <a asp-action="Edit" asp-controller="Shoes" asp-route-shoeId="@Model.Id" class="product__btn-edit btn-buy" style="margin-right: 50%">Edit</a>
-            <a href="#" class="product__btn btn-buy">Delete</a>
+            <a asp-action="Delete" asp-controller="Shoes" asp-route-shoeId = "@Model.Id" class="product__btn btn-buy">Delete</a>
         </div>
 
     }
