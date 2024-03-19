@@ -19,6 +19,7 @@ namespace FootTrap.Services.Services
         {
             this.context = context;
         }
+
         public async Task Create(string userId)
         {
             var customer = new Customer()

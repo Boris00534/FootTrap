@@ -17,14 +17,19 @@ namespace FootTrap.Data
             : base(options)
         {
 
+            if (this.Database.IsRelational())
+            {
+                this.Database.Migrate();
+            }
+            else
+            {
+                this.Database.EnsureCreated();
+            }
+
             this.seedDb = seedDb;
 
         }
 
-        public FootTrapDbContext()
-        {
-
-        }
 
         public DbSet<Category> Category { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
@@ -45,16 +50,16 @@ namespace FootTrap.Data
                 .HasKey(os => new { os.SizeId, os.ShoeId });
 
 
-            builder.ApplyConfiguration(new CategoryConfiguration());
+            if (seedDb)
+            {
+                builder.ApplyConfiguration(new CategoryConfiguration());
 
-            builder.ApplyConfiguration(new UserConfiguration());
-            builder.ApplyConfiguration(new RolesConfiguration());
-            builder.ApplyConfiguration(new UserRolesConfiguration());
-            builder.ApplyConfiguration(new CustomerConfiguration());
-            builder.ApplyConfiguration(new SizeConfiguration());
-
-
-
+                builder.ApplyConfiguration(new UserConfiguration());
+                builder.ApplyConfiguration(new RolesConfiguration());
+                builder.ApplyConfiguration(new UserRolesConfiguration());
+                builder.ApplyConfiguration(new CustomerConfiguration());
+                builder.ApplyConfiguration(new SizeConfiguration());
+            }
 
             base.OnModelCreating(builder);
 
