@@ -39,6 +39,7 @@ namespace FootTrap.Test.UnitTest
                 City = "Kazanlak",
                 Country = "Bulgaria",
                 Address = "ul. Al. Batenberg 15",
+                PhoneNumber = "0889864831",
                 ProfilePictureUrl = "https://res.cloudinary.com/dwocfg6qw/image/upload/v1703607793/FootTrapProject/5685_jb2zs0.jpg"
             };
 
@@ -55,6 +56,7 @@ namespace FootTrap.Test.UnitTest
                 City = "Kazanlak",
                 Country = "Bulgaria",
                 Address = "ul. Stefan Stambolov 20",
+                PhoneNumber = "0889864821",
                 ProfilePictureUrl = "https://res.cloudinary.com/dwocfg6qw/image/upload/v1703607775/FootTrapProject/2150771123_oytfrj.jpg"
             };
 

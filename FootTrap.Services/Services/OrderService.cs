@@ -181,6 +181,11 @@ namespace FootTrap.Services.Services
                 })
                 .FirstOrDefaultAsync();
 
+            if(order == null ) 
+            {
+                return null;
+            }
+
 
             return order!;
         }
