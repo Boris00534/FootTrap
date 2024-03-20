@@ -26,6 +26,11 @@ namespace FootTrap.Services.Services
             var user = await context.Users
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
+            if (user == null)
+            {
+                return;
+            }
+
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.Email = model.Email;
@@ -82,6 +87,11 @@ namespace FootTrap.Services.Services
                     ProfilePictureUrl = u.ProfilePictureUrl
                 })
                 .FirstOrDefaultAsync();
+
+            if(profile == null)
+            {
+                return null;
+            }
 
             return profile!;
         }

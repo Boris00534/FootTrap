@@ -5,6 +5,7 @@ using FootTrap.Services.Services;
 using FootTrap.Services.ViewModels.Order;
 using FootTrap.Services.ViewModels.Shoes;
 using Microsoft.EntityFrameworkCore;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace FootTrap.Test.UnitTest
         private DbContextOptions<FootTrapDbContext> dbOptions;
         private FootTrapDbContext dbContext;
         private IOrderService orderService;
+        
 
         [SetUp]
         public void SetUp()
