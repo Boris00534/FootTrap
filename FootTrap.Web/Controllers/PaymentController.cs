@@ -61,7 +61,7 @@ namespace FootTrap.Web.Controllers
 
             string? customerId = await customerService.GetCustomerIdByUserIdAsync(userId!);
 
-            string paymentId = await paymentService.CreatPaymentAsync(model, customerId!);
+            string paymentId = await paymentService.CreatePaymentAsync(model, customerId!);
 
             TempData[SuccessMessage] = "Successful payment";
 

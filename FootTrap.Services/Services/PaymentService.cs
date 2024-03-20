@@ -25,14 +25,18 @@ namespace FootTrap.Services.Services
             var payment = await context.Payments
                 .FirstOrDefaultAsync(p => p.Id == paymentId);
 
+            if (payment == null)
+            {
+                return;
+            }
+
             payment!.OrderId = orderId;
 
             await context.SaveChangesAsync();
 
-            
         }
 
-        public async Task<string> CreatPaymentAsync(PaymentFormModel model, string customerId)
+        public async Task<string> CreatePaymentAsync(PaymentFormModel model, string customerId)
         {
             string[] el = model.ExpirationDate.Split('/');
             string expiryDate = $"01/{el[0]}/20{el[1]}";
