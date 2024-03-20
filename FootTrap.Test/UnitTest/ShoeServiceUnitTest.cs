@@ -394,5 +394,19 @@ namespace FootTrap.Test.UnitTest
             Assert.That(result, Is.Null);
         }
 
+        [Test]
+        [TestCase("id")]
+        [TestCase("name")]
+        [TestCase("description")]
+        public async Task DeleteShoeAsyncShouldDoNothing(string shoeId)
+        {
+            await shoeService.DeleteShoeAsync(shoeId);
+
+            var result = await dbContext.Shoes.Where(sh => sh.IsActive).FirstOrDefaultAsync(sh => sh.Id == shoeId);
+
+            Assert.That(result, Is.Null);
+
+        }
+
     }
 }
