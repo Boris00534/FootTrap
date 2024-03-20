@@ -37,7 +37,7 @@ namespace FootTrap.Data.Models
         [Precision(18,2)]
         public decimal Price { get; set; }
 
-        public string ShoeUrlImage { get; set; } = null!;
+        public string? ShoeUrlImage { get; set; }
 
         public bool IsActive { get; set; }
 

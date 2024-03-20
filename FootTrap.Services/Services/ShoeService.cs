@@ -119,6 +119,11 @@ namespace FootTrap.Services.Services
                 })
                 .FirstOrDefaultAsync();
 
+            if(shoe == null)
+            {
+                return null;
+            }
+
             return shoe;
 
 
@@ -168,6 +173,11 @@ namespace FootTrap.Services.Services
                 })
                 .FirstOrDefaultAsync(sh => sh.Id == shoeId);
 
+            if(shoe == null)
+            {
+                return null;
+            }
+
             return shoe!;
 
         }
@@ -184,6 +194,12 @@ namespace FootTrap.Services.Services
 
                  })
                  .FirstOrDefaultAsync();
+
+            if (shoe == null) 
+            {
+                return null;
+            }
+
 
             shoe!.Sizes = await context.Sizes
                 .Select(s => new SizeViewModel()
